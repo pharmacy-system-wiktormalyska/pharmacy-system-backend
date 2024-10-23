@@ -16,6 +16,7 @@ public class DrugMapper {
         .maNumber(drug.getMaNumber())
         .atcCode(drug.getAtcCode())
         .strength(drug.getStrength())
+        .modificationDateTime(drug.getModificationDateTime())
         .isActive(drug.isActive())
         .build();
   }

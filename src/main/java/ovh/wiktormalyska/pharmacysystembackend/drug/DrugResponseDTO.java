@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -18,6 +20,8 @@ public class DrugResponseDTO {
   private String maNumber;
   private String atcCode;
   private String strength;
+
+  private LocalDateTime modificationDateTime;
 
   private boolean isActive;
 }

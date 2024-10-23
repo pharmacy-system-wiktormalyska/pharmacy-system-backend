@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /* Fields for this class have been determined
  * based on data provided in
  * https://rejestry.ezdrowie.gov.pl/rpl/search/public
@@ -29,6 +31,8 @@ public class Drug {
   private String maNumber;
   private String atcCode;
   private String strength;
+
+  private LocalDateTime modificationDateTime;
 
   @Builder.Default private boolean isActive = true;
 }

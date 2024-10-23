@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,8 @@ public class DrugServiceImpl implements DrugService {
     drug.setMaNumber(drugResponseDTO.getMaNumber());
     drug.setAtcCode(drugResponseDTO.getAtcCode());
     drug.setStrength(drugResponseDTO.getStrength());
+
+    drug.setModificationDateTime(LocalDateTime.now());
 
     return DrugMapper.toDTO(drugRepository.save(drug));
   }
