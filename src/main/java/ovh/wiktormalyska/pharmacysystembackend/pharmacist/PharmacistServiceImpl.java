@@ -68,7 +68,7 @@ public class PharmacistServiceImpl implements PharmacistService {
 
     if (PharmacistOptional.isEmpty()) {
       throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND, "Pharmacist with this name doesn't exist.");
+          HttpStatus.NOT_FOUND, "Pharmacist with this id doesn't exist.");
     }
 
     return PharmacistOptional.get();

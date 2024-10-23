@@ -4,160 +4,130 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacy.*;
+
+import ovh.wiktormalyska.pharmacysystembackend.pharmacist.*;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.PharmacyServiceImpl;
 
 public class PharmacistServiceImplTest {
 
-  @Mock private PharmacyRepository pharmacyRepository;
+  @Mock private PharmacistRepository pharmacistRepository;
 
-  @InjectMocks private PharmacyServiceImpl pharmacyServiceImpl;
+  @Mock private PharmacyServiceImpl pharmacyServiceImpl;
+
+  @InjectMocks private PharmacistServiceImpl pharmacistService;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     MockitoAnnotations.openMocks(this);
+    when(pharmacyServiceImpl.getPharmacy(1L)).thenReturn(Pharmacy.builder().id(1L).build());
   }
 
   @Test
-  public void testAddNewPharmacy_Success() {
-    PharmacyRequestDTO requestDTO =
-        PharmacyRequestDTO.builder().name("Test Pharmacy").address("Test Address").build();
+  void testAddNewPharmacist() {
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).build();
+    PharmacistRequestDTO pharmacistRequestDTO =
+        PharmacistRequestDTO.builder().id(1L).name("John").surname("Doe").pharmacyId(1L).build();
 
-    Pharmacy pharmacy =
-        Pharmacy.builder().id(1L).name("Test Pharmacy").address("Test Address").build();
+    when(pharmacistRepository.save(any(Pharmacist.class))).thenReturn(pharmacist);
 
-    PharmacyResponseDTO responseDTO =
-        PharmacyResponseDTO.builder().id(1L).name("Test Pharmacy").address("Test Address").build();
+    PharmacistResponseDTO response = pharmacistService.addNewPharmacist(pharmacistRequestDTO);
 
-    when(pharmacyRepository.save(any(Pharmacy.class))).thenReturn(pharmacy);
-    PharmacyResponseDTO result = pharmacyServiceImpl.addNewPharmacy(requestDTO);
-
-    assertNotNull(result);
-    assertEquals(responseDTO.getId(), result.getId());
-    assertEquals(responseDTO.getName(), result.getName());
-    assertEquals(responseDTO.getAddress(), result.getAddress());
+    assertNotNull(response);
+    assertEquals("John", response.getName());
   }
 
   @Test
-  public void testAddNewPharmacy_Failure() {
-    PharmacyRequestDTO requestDTO =
-        PharmacyRequestDTO.builder().name("Test Pharmacy").address("Test Address").build();
+  void testGetPharmacistById() {
+    Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
 
-    when(pharmacyRepository.save(any(Pharmacy.class)))
-        .thenThrow(new RuntimeException("Error saving pharmacy"));
+    when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.of(pharmacist));
 
-    RuntimeException exception =
-        assertThrows(RuntimeException.class, () -> pharmacyServiceImpl.addNewPharmacy(requestDTO));
-    assertEquals("Error saving pharmacy", exception.getMessage());
+    PharmacistResponseDTO response = pharmacistService.getPharmacistById(pharmacist.getId());
+
+    assertNotNull(response);
+    assertEquals("John", response.getName());
   }
 
   @Test
-  public void testGetPharmacyById_Success() {
-    Long id = 1L;
-    Pharmacy pharmacy =
-        Pharmacy.builder().id(id).name("Test Pharmacy").address("Test Address").build();
+  void testGetPharmacistById_NotFound() {
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).build();
 
-    PharmacyResponseDTO responseDTO =
-        PharmacyResponseDTO.builder().id(id).name("Test Pharmacy").address("Test Address").build();
-
-    when(pharmacyRepository.findById(id)).thenReturn(Optional.of(pharmacy));
-    PharmacyResponseDTO result = pharmacyServiceImpl.getPharmacyById(id);
-
-    assertNotNull(result);
-    assertEquals(responseDTO.getId(), result.getId());
-    assertEquals(responseDTO.getName(), result.getName());
-    assertEquals(responseDTO.getAddress(), result.getAddress());
-  }
-
-  @Test
-  public void testGetPharmacyById_NotFound() {
-    Long id = 1L;
-
-    when(pharmacyRepository.findById(id)).thenReturn(Optional.empty());
-
-    ResponseStatusException exception =
-        assertThrows(ResponseStatusException.class, () -> pharmacyServiceImpl.getPharmacyById(id));
-    assertEquals(
-        "404 NOT_FOUND \"Pharmacy with this name doesn't exist.\"", exception.getMessage());
-  }
-
-  @Test
-  public void testUpdatePharmacy_Success() {
-    PharmacyRequestDTO requestDTO =
-        PharmacyRequestDTO.builder()
-            .id(1L)
-            .name("Updated Pharmacy")
-            .address("Updated Address")
-            .build();
-
-    Pharmacy existingPharmacy =
-        Pharmacy.builder().id(1L).name("Old Pharmacy").address("Old Address").build();
-
-    Pharmacy updatedPharmacy =
-        Pharmacy.builder().id(1L).name("Updated Pharmacy").address("Updated Address").build();
-
-    PharmacyResponseDTO responseDTO =
-        PharmacyResponseDTO.builder()
-            .id(1L)
-            .name("Updated Pharmacy")
-            .address("Updated Address")
-            .build();
-
-    when(pharmacyRepository.findById(1L)).thenReturn(Optional.of(existingPharmacy));
-    when(pharmacyRepository.save(any(Pharmacy.class))).thenReturn(updatedPharmacy);
-    PharmacyResponseDTO result = pharmacyServiceImpl.updatePharmacy(requestDTO);
-
-    assertNotNull(result);
-    assertEquals(responseDTO.getId(), result.getId());
-    assertEquals(responseDTO.getName(), result.getName());
-    assertEquals(responseDTO.getAddress(), result.getAddress());
-  }
-
-  @Test
-  public void testRemovePharmacyById_Success() {
-    Long id = 1L;
-    Pharmacy pharmacy =
-        Pharmacy.builder()
-            .id(id)
-            .name("Test Pharmacy")
-            .address("Test Address")
-            .isActive(true)
-            .build();
-
-    PharmacyResponseDTO responseDTO =
-        PharmacyResponseDTO.builder()
-            .id(id)
-            .name("Test Pharmacy")
-            .address("Test Address")
-            .isActive(false)
-            .build();
-
-    when(pharmacyRepository.findById(id)).thenReturn(Optional.of(pharmacy));
-    when(pharmacyRepository.save(any(Pharmacy.class))).thenReturn(pharmacy);
-    PharmacyResponseDTO result = pharmacyServiceImpl.removePharmacyById(id);
-
-    assertNotNull(result);
-    assertEquals(responseDTO.getId(), result.getId());
-    assertEquals(responseDTO.getName(), result.getName());
-    assertEquals(responseDTO.getAddress(), result.getAddress());
-    assertFalse(result.isActive());
-  }
-
-  @Test
-  public void testRemovePharmacyById_NotFound() {
-    Long id = 1L;
-
-    when(pharmacyRepository.findById(id)).thenReturn(Optional.empty());
+    when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.empty());
 
     ResponseStatusException exception =
         assertThrows(
-            ResponseStatusException.class, () -> pharmacyServiceImpl.removePharmacyById(id));
-    assertEquals(
-        "404 NOT_FOUND \"Pharmacy with this name doesn't exist.\"", exception.getMessage());
+            ResponseStatusException.class,
+            () -> pharmacistService.getPharmacistById(pharmacist.getId()));
+
+    assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    assertEquals("Pharmacist with this id doesn't exist.", exception.getReason());
+  }
+
+  @Test
+  void testUpdatePharmacist() {
+    Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
+    Pharmacist updatedPharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Smith").isActive(true).pharmacy(pharmacy).build();
+    PharmacistRequestDTO updatedPharmacistRequestDTO =
+        PharmacistRequestDTO.builder().id(1L).name("John").surname("Smith").pharmacyId(1L).build();
+
+    when(pharmacistRepository.findById(updatedPharmacistRequestDTO.getId()))
+        .thenReturn(Optional.of(pharmacist));
+    when(pharmacistRepository.save(any(Pharmacist.class))).thenReturn(updatedPharmacist);
+    when(pharmacyServiceImpl.getPharmacy(1L)).thenReturn(pharmacy);
+
+    PharmacistResponseDTO response =
+        pharmacistService.updatePharmacist(updatedPharmacistRequestDTO);
+
+    assertNotNull(response);
+    assertEquals("John", response.getName());
+    assertEquals("Smith", response.getSurname());
+  }
+
+  @Test
+  void testRemovePharmacistById() {
+    Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
+    Pharmacist updatedPharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(false).pharmacy(pharmacy).build();
+    when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.of(pharmacist));
+    when(pharmacistRepository.save(any(Pharmacist.class))).thenReturn(updatedPharmacist);
+
+    pharmacistService.removePharmacistById(pharmacist.getId());
+    PharmacistResponseDTO response = pharmacistService.getPharmacistById(pharmacist.getId());
+
+    assertNotNull(response);
+    assertFalse(response.isActive());
+  }
+
+  @Test
+  void testRemovePharmacistById_AlreadyDeleted() {
+    Pharmacist pharmacist =
+        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(false).build();
+    when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.of(pharmacist));
+
+    ResponseStatusException exception =
+        assertThrows(
+            ResponseStatusException.class,
+            () -> pharmacistService.removePharmacistById(pharmacist.getId()));
+
+    assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
+    assertEquals("Pharmacist has already been deleted.", exception.getReason());
   }
 }
