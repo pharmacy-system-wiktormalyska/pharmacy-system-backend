@@ -51,7 +51,7 @@ public class PharmacyServiceImpl implements PharmacyService {
   }
 
   // Utility
-  private @NotNull Pharmacy getPharmacy(Long id) {
+  public @NotNull Pharmacy getPharmacy(Long id) {
     Optional<Pharmacy> PharmacyOptional = pharmacyRepository.findById(id);
 
     if (PharmacyOptional.isEmpty()) {

@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.web.server.ResponseStatusException;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacy.*;
 
-public class PharmacyServiceImplTest {
+public class PharmacistServiceImplTest {
 
   @Mock private PharmacyRepository pharmacyRepository;
 

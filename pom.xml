@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ovh.wiktormalyska</groupId>
-    <artifactId>pharmacy-system-backend</artifactId>
+    <artifactId>pharmacist-system-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pharmacy-system-backend</name>
-    <description>pharmacy-system-backend</description>
+    <name>pharmacist-system-backend</name>
+    <description>pharmacist-system-backend</description>
     <url/>
     <licenses>
         <license/>
