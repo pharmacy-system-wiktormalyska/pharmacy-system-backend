@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        skipDefaultCheckout()
+    }
     stages{
         stage('Verify Workspace') {
             steps {
