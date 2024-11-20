@@ -61,14 +61,19 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   // Utility
   private @NotNull Administrator getAdministrator(Long id) {
-    Optional<Administrator> AdministratorOptional = administratorRepository.findById(id);
+    Optional<Administrator> administratorOptional = administratorRepository.findById(id);
 
-    if (AdministratorOptional.isEmpty()) {
+    if (administratorOptional.isEmpty()) {
       throw new ResponseStatusException(
           HttpStatus.NOT_FOUND, "Administrator with this id doesn't exist.");
     }
 
-    return AdministratorOptional.get();
+    if (!administratorOptional.get().isActive()) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Administrator has been deleted.");
+    }
+
+    return administratorOptional.get();
   }
 
   private @NotNull Administrator removeAdministrator(@NotNull Administrator administrator) {

@@ -64,14 +64,19 @@ public class PharmacistServiceImpl implements PharmacistService {
 
   // Utility
   private @NotNull Pharmacist getPharmacist(Long id) {
-    Optional<Pharmacist> PharmacistOptional = pharmacistRepository.findById(id);
+    Optional<Pharmacist> pharmacistOptional = pharmacistRepository.findById(id);
 
-    if (PharmacistOptional.isEmpty()) {
+    if (pharmacistOptional.isEmpty()) {
       throw new ResponseStatusException(
           HttpStatus.NOT_FOUND, "Pharmacist with this id doesn't exist.");
     }
 
-    return PharmacistOptional.get();
+    if (!pharmacistOptional.get().isActive()) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Pharmacist has been deleted.");
+    }
+
+    return pharmacistOptional.get();
   }
 
   private @NotNull Pharmacist removePharmacist(@NotNull Pharmacist pharmacist) {

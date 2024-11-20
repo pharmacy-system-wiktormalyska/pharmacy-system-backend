@@ -64,14 +64,19 @@ public class ManagerServiceImpl implements ManagerService {
 
   // Utility
   private @NotNull Manager getManager(Long id) {
-    Optional<Manager> ManagerOptional = managerRepository.findById(id);
+    Optional<Manager> managerOptional = managerRepository.findById(id);
 
-    if (ManagerOptional.isEmpty()) {
+    if (managerOptional.isEmpty()) {
       throw new ResponseStatusException(
           HttpStatus.NOT_FOUND, "Manager with this id doesn't exist.");
     }
 
-    return ManagerOptional.get();
+    if (!managerOptional.get().isActive()) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Manager has been deleted.");
+    }
+
+    return managerOptional.get();
   }
 
   private @NotNull Manager removeManager(@NotNull Manager manager) {
