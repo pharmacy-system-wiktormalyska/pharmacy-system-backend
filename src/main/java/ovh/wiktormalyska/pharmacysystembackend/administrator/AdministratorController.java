@@ -18,7 +18,7 @@ public class AdministratorController {
 
   @GetMapping("get/id/{id}")
   public AdministratorResponseDTO getAdministratorById(@PathVariable Long id) {
-    return administratorService.getAdministratorById(id);
+    return administratorService.getAdministratorDtoById(id);
   }
 
   @PutMapping("update")

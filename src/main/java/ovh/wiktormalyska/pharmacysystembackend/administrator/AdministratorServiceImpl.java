@@ -6,16 +6,13 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacy.PharmacyServiceImpl;
 
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
   private final AdministratorRepository administratorRepository;
-  private final PharmacyServiceImpl pharmacyServiceImpl;
 
-  AdministratorServiceImpl(AdministratorRepository administratorRepository, PharmacyServiceImpl pharmacyServiceImpl) {
+  AdministratorServiceImpl(AdministratorRepository administratorRepository) {
     this.administratorRepository = administratorRepository;
-    this.pharmacyServiceImpl = pharmacyServiceImpl;
   }
 
   @Override
@@ -26,14 +23,14 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public AdministratorResponseDTO getAdministratorById(Long id) {
-    return AdministratorMapper.toDTO(getAdministrator(id));
+  public AdministratorResponseDTO getAdministratorDtoById(Long id) {
+    return AdministratorMapper.toDTO(getAdministratorById(id));
   }
 
   @Override
   public AdministratorResponseDTO updateAdministrator(
       @NotNull AdministratorRequestDTO administratorRequestDTO) {
-    Administrator administrator = getAdministrator(administratorRequestDTO.getId());
+    Administrator administrator = getAdministratorById(administratorRequestDTO.getId());
 
     administrator.setName(administratorRequestDTO.getName());
     administrator.setSurname(administratorRequestDTO.getSurname());
@@ -54,13 +51,13 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   @Override
   public AdministratorResponseDTO removeAdministratorById(Long id) {
-    Administrator administrator = getAdministrator(id);
+    Administrator administrator = getAdministratorById(id);
 
     return AdministratorMapper.toDTO(removeAdministrator(administrator));
   }
 
   // Utility
-  private @NotNull Administrator getAdministrator(Long id) {
+  private @NotNull Administrator getAdministratorById(Long id) {
     Optional<Administrator> administratorOptional = administratorRepository.findById(id);
 
     if (administratorOptional.isEmpty()) {

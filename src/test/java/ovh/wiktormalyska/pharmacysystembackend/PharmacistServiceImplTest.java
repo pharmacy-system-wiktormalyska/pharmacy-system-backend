@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import ovh.wiktormalyska.pharmacysystembackend.pharmacist.*;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacy.PharmacyServiceImpl;
@@ -47,21 +45,27 @@ public class PharmacistServiceImplTest {
   }
 
   @Test
-  void testGetPharmacistById() {
+  void testGetPharmacistByIDDtoById() {
     Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
     Pharmacist pharmacist =
-        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
+        Pharmacist.builder()
+            .id(1L)
+            .name("John")
+            .surname("Doe")
+            .isActive(true)
+            .pharmacy(pharmacy)
+            .build();
 
     when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.of(pharmacist));
 
-    PharmacistResponseDTO response = pharmacistService.getPharmacistById(pharmacist.getId());
+    PharmacistResponseDTO response = pharmacistService.getPharmacistDtoById(pharmacist.getId());
 
     assertNotNull(response);
     assertEquals("John", response.getName());
   }
 
   @Test
-  void testGetPharmacistById_NotFound() {
+  void testGetPharmacistByIDDtoById_NotFound() {
     Pharmacist pharmacist =
         Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).build();
 
@@ -70,7 +74,7 @@ public class PharmacistServiceImplTest {
     ResponseStatusException exception =
         assertThrows(
             ResponseStatusException.class,
-            () -> pharmacistService.getPharmacistById(pharmacist.getId()));
+            () -> pharmacistService.getPharmacistDtoById(pharmacist.getId()));
 
     assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     assertEquals("Pharmacist with this id doesn't exist.", exception.getReason());
@@ -80,9 +84,21 @@ public class PharmacistServiceImplTest {
   void testUpdatePharmacist() {
     Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
     Pharmacist pharmacist =
-        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
+        Pharmacist.builder()
+            .id(1L)
+            .name("John")
+            .surname("Doe")
+            .isActive(true)
+            .pharmacy(pharmacy)
+            .build();
     Pharmacist updatedPharmacist =
-        Pharmacist.builder().id(1L).name("John").surname("Smith").isActive(true).pharmacy(pharmacy).build();
+        Pharmacist.builder()
+            .id(1L)
+            .name("John")
+            .surname("Smith")
+            .isActive(true)
+            .pharmacy(pharmacy)
+            .build();
     PharmacistRequestDTO updatedPharmacistRequestDTO =
         PharmacistRequestDTO.builder().id(1L).name("John").surname("Smith").pharmacyId(1L).build();
 
@@ -103,17 +119,32 @@ public class PharmacistServiceImplTest {
   void testRemovePharmacistById() {
     Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
     Pharmacist pharmacist =
-        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).pharmacy(pharmacy).build();
+        Pharmacist.builder()
+            .id(1L)
+            .name("John")
+            .surname("Doe")
+            .isActive(true)
+            .pharmacy(pharmacy)
+            .build();
     Pharmacist updatedPharmacist =
-        Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(false).pharmacy(pharmacy).build();
+        Pharmacist.builder()
+            .id(1L)
+            .name("John")
+            .surname("Doe")
+            .isActive(false)
+            .pharmacy(pharmacy)
+            .build();
     when(pharmacistRepository.findById(pharmacist.getId())).thenReturn(Optional.of(pharmacist));
     when(pharmacistRepository.save(any(Pharmacist.class))).thenReturn(updatedPharmacist);
 
     pharmacistService.removePharmacistById(pharmacist.getId());
-    PharmacistResponseDTO response = pharmacistService.getPharmacistById(pharmacist.getId());
+    ResponseStatusException exception =
+        assertThrows(
+            ResponseStatusException.class,
+            () -> pharmacistService.getPharmacistDtoById(pharmacist.getId()));
 
-    assertNotNull(response);
-    assertFalse(response.isActive());
+    assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
+    assertEquals("Pharmacist has been deleted.", exception.getReason());
   }
 
   @Test
@@ -128,6 +159,6 @@ public class PharmacistServiceImplTest {
             () -> pharmacistService.removePharmacistById(pharmacist.getId()));
 
     assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
-    assertEquals("Pharmacist has already been deleted.", exception.getReason());
+    assertEquals("Pharmacist has been deleted.", exception.getReason());
   }
 }

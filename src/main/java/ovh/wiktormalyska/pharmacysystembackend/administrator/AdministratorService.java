@@ -3,7 +3,7 @@ package ovh.wiktormalyska.pharmacysystembackend.administrator;
 public interface AdministratorService {
   AdministratorResponseDTO addNewAdministrator(AdministratorRequestDTO administratorRequestDTO);
 
-  AdministratorResponseDTO getAdministratorById(Long id);
+  AdministratorResponseDTO getAdministratorDtoById(Long id);
 
   AdministratorResponseDTO updateAdministrator(AdministratorRequestDTO administratorRequestDTO);
 

@@ -27,14 +27,14 @@ public class PharmacistServiceImpl implements PharmacistService {
   }
 
   @Override
-  public PharmacistResponseDTO getPharmacistById(Long id) {
-    return PharmacistMapper.toDTO(getPharmacist(id));
+  public PharmacistResponseDTO getPharmacistDtoById(Long id) {
+    return PharmacistMapper.toDTO(getPharmacistById(id));
   }
 
   @Override
   public PharmacistResponseDTO updatePharmacist(
       @NotNull PharmacistRequestDTO pharmacistRequestDTO) {
-    Pharmacist pharmacist = getPharmacist(pharmacistRequestDTO.getId());
+    Pharmacist pharmacist = getPharmacistById(pharmacistRequestDTO.getId());
 
     pharmacist.setName(pharmacistRequestDTO.getName());
     pharmacist.setSurname(pharmacistRequestDTO.getSurname());
@@ -57,13 +57,13 @@ public class PharmacistServiceImpl implements PharmacistService {
 
   @Override
   public PharmacistResponseDTO removePharmacistById(Long id) {
-    Pharmacist pharmacist = getPharmacist(id);
+    Pharmacist pharmacist = getPharmacistById(id);
 
     return PharmacistMapper.toDTO(removePharmacist(pharmacist));
   }
 
   // Utility
-  private @NotNull Pharmacist getPharmacist(Long id) {
+  private @NotNull Pharmacist getPharmacistById(Long id) {
     Optional<Pharmacist> pharmacistOptional = pharmacistRepository.findById(id);
 
     if (pharmacistOptional.isEmpty()) {

@@ -18,7 +18,7 @@ public class PharmacistController {
 
   @GetMapping("get/id/{id}")
   public PharmacistResponseDTO getPharmacistById(@PathVariable Long id) {
-    return pharmacistService.getPharmacistById(id);
+    return pharmacistService.getPharmacistDtoById(id);
   }
 
   @PutMapping("update")

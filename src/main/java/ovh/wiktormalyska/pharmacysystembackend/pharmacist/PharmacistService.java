@@ -3,7 +3,7 @@ package ovh.wiktormalyska.pharmacysystembackend.pharmacist;
 public interface PharmacistService {
   PharmacistResponseDTO addNewPharmacist(PharmacistRequestDTO pharmacistRequestDTO);
 
-  PharmacistResponseDTO getPharmacistById(Long id);
+  PharmacistResponseDTO getPharmacistDtoById(Long id);
 
   PharmacistResponseDTO updatePharmacist(PharmacistRequestDTO pharmacistRequestDTO);
 

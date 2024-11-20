@@ -27,14 +27,14 @@ public class ManagerServiceImpl implements ManagerService {
   }
 
   @Override
-  public ManagerResponseDTO getManagerById(Long id) {
-    return ManagerMapper.toDTO(getManager(id));
+  public ManagerResponseDTO getManagerDtoById(Long id) {
+    return ManagerMapper.toDTO(getManagerById(id));
   }
 
   @Override
   public ManagerResponseDTO updateManager(
       @NotNull ManagerRequestDTO managerRequestDTO) {
-    Manager manager = getManager(managerRequestDTO.getId());
+    Manager manager = getManagerById(managerRequestDTO.getId());
 
     manager.setName(managerRequestDTO.getName());
     manager.setSurname(managerRequestDTO.getSurname());
@@ -57,13 +57,13 @@ public class ManagerServiceImpl implements ManagerService {
 
   @Override
   public ManagerResponseDTO removeManagerById(Long id) {
-    Manager manager = getManager(id);
+    Manager manager = getManagerById(id);
 
     return ManagerMapper.toDTO(removeManager(manager));
   }
 
   // Utility
-  private @NotNull Manager getManager(Long id) {
+  private @NotNull Manager getManagerById(Long id) {
     Optional<Manager> managerOptional = managerRepository.findById(id);
 
     if (managerOptional.isEmpty()) {
