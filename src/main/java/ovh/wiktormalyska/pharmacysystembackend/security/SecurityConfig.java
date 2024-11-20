@@ -35,23 +35,10 @@ public class SecurityConfig {
                 authorize
                     .requestMatchers("auth/**")
                     .permitAll()
-                    .requestMatchers("cart/**")
-                    .hasAnyAuthority("USER", "ADMIN")
-                    .requestMatchers("user/create")
-                    .permitAll()
-                    .requestMatchers("user/get", "user/edit", "user/delete")
-                    .hasAnyAuthority("USER", "ADMIN")
-                    .requestMatchers("user/**")
-                    .hasAuthority("ADMIN")
-                    .requestMatchers("product/add/**", "product/delete/**")
-                    .hasAuthority("ADMIN")
-                    .requestMatchers("product/get/**")
-                    .permitAll()
-                    .requestMatchers("order/create", "order/get/**")
-                    .hasAnyAuthority("USER", "ADMIN")
-                    .requestMatchers(
-                        "order/get/all", "order/update", "order/update/**", "order/delete")
-                    .hasAuthority("ADMIN")
+                    .requestMatchers("drug/**")
+                    .hasAnyAuthority("PHARMACIST", "MANAGER", "ADMINISTRATOR")
+                    .requestMatchers("pharmacy/**", "pharmacist/**")
+                    .hasAnyAuthority("MANAGER", "ADMINISTRATOR")
                     .anyRequest()
                     .authenticated())
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -69,7 +56,7 @@ public class SecurityConfig {
 
     configuration.setAllowedOrigins(
         List.of(
-            "http://localhost:3000", "http://spring.skni.umcs.pl", "https://spring.skni.umcs.pl"));
+            "http://localhost:3000", "https://frontend.pharmacy.wiktormalyska.ovh", "https://pharmacy.wiktormalyska.ovh"));
     configuration.setAllowedMethods(List.of("*"));
     configuration.setAllowedHeaders(List.of("*"));
 
