@@ -1,5 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.security;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class AuthController {
 
   @PostMapping("login")
   public AuthResponseDto login(@RequestBody AuthRequestDto authRequestDto) {
-    User authenticatedUser = authService.login(authRequestDto);
+    UserDetails authenticatedUser = authService.login(authRequestDto);
 
     return new AuthResponseDto(jwtService.generateToken(authenticatedUser));
   }
