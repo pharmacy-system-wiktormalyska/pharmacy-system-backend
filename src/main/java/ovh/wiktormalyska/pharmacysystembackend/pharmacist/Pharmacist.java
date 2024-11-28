@@ -44,6 +44,7 @@ public class Pharmacist implements UserDetails {
   @JoinColumn(name = "pharmacy_id")
   private Pharmacy pharmacy;
 
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
 
   private String password;

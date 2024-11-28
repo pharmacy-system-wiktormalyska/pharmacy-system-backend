@@ -5,6 +5,8 @@ public interface PharmacistService {
 
   PharmacistResponseDTO getPharmacistDtoById(Long id);
 
+  Pharmacist getPharmacistById(Long id);
+
   PharmacistResponseDTO updatePharmacist(PharmacistRequestDTO pharmacistRequestDTO);
 
   PharmacistResponseDTO removePharmacistById(Long id);

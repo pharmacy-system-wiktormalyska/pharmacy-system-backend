@@ -21,13 +21,18 @@ public class DrugServiceImpl implements DrugService {
   }
 
   @Override
-  public DrugResponseDTO getDrugByName(String name) {
+  public DrugResponseDTO getDrugDtoByName(String name) {
     return DrugMapper.toDTO(getDrug(name));
   }
 
   @Override
-  public DrugResponseDTO getDrugById(Long id) {
+  public DrugResponseDTO getDrugDtoById(Long id) {
     return DrugMapper.toDTO(getDrug(id));
+  }
+
+  @Override
+  public Drug getDrugById(Long id) {
+    return getDrug(id);
   }
 
   @Override

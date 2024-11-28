@@ -22,7 +22,7 @@ public class Pharmacy {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // System id
 
-  private Long pharmacyId; // Given after registering the pharmacy in Poland
+  private Long pharmacyId; // Received after registering the pharmacy in Poland
   private String name;
   private String address;
   private PharmacyType type;
@@ -34,6 +34,7 @@ public class Pharmacy {
   private String email;
   private String website;
 
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
 
   @Builder.Default private boolean isActive = true; // System status

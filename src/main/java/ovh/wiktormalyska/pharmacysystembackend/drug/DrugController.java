@@ -18,12 +18,12 @@ public class DrugController {
 
   @GetMapping("get/name/{name}")
   public DrugResponseDTO getDrugByName(@PathVariable String name) {
-    return drugService.getDrugByName(name);
+    return drugService.getDrugDtoByName(name);
   }
 
   @GetMapping("get/id/{id}")
   public DrugResponseDTO getDrugById(@PathVariable Long id) {
-    return drugService.getDrugById(id);
+    return drugService.getDrugDtoById(id);
   }
 
   @PutMapping("update")

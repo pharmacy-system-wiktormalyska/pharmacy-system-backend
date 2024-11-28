@@ -39,6 +39,7 @@ public class Administrator implements UserDetails {
   private String mothersName;
   private String education;
 
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
 
   private String password;

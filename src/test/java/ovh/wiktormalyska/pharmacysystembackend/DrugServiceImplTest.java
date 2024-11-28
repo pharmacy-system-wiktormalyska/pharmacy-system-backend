@@ -51,14 +51,14 @@ public class DrugServiceImplTest {
   }
 
   @Test
-  public void testGetDrugByName_Success() {
+  public void testGetDrugDtoByName_Success() {
     String name = "Test Drug";
     Drug drug = Drug.builder().id(1L).name(name).build();
 
     DrugResponseDTO responseDTO = DrugResponseDTO.builder().id(1L).name(name).build();
 
     when(drugRepository.findByName(name)).thenReturn(Optional.of(drug));
-    DrugResponseDTO result = drugServiceImpl.getDrugByName(name);
+    DrugResponseDTO result = drugServiceImpl.getDrugDtoByName(name);
 
     assertNotNull(result);
     assertEquals(responseDTO.getId(), result.getId());
@@ -66,25 +66,25 @@ public class DrugServiceImplTest {
   }
 
   @Test
-  public void testGetDrugByName_NotFound() {
+  public void testGetDrugDtoByName_NotFound() {
     String name = "Test Drug";
 
     when(drugRepository.findByName(name)).thenReturn(Optional.empty());
 
     ResponseStatusException exception =
-        assertThrows(ResponseStatusException.class, () -> drugServiceImpl.getDrugByName(name));
+        assertThrows(ResponseStatusException.class, () -> drugServiceImpl.getDrugDtoByName(name));
     assertEquals("404 NOT_FOUND \"Drug with this id doesn't exist.\"", exception.getMessage());
   }
 
   @Test
-  public void testGetDrugById_Success() {
+  public void testGetDrugDtoById_Success() {
     Long id = 1L;
     Drug drug = Drug.builder().id(id).name("Test Drug").build();
 
     DrugResponseDTO responseDTO = DrugResponseDTO.builder().id(id).name("Test Drug").build();
 
     when(drugRepository.findById(id)).thenReturn(Optional.of(drug));
-    DrugResponseDTO result = drugServiceImpl.getDrugById(id);
+    DrugResponseDTO result = drugServiceImpl.getDrugDtoById(id);
 
     assertNotNull(result);
     assertEquals(responseDTO.getId(), result.getId());
@@ -92,13 +92,13 @@ public class DrugServiceImplTest {
   }
 
   @Test
-  public void testGetDrugById_NotFound() {
+  public void testGetDrugDtoById_NotFound() {
     Long id = 1L;
 
     when(drugRepository.findById(id)).thenReturn(Optional.empty());
 
     ResponseStatusException exception =
-        assertThrows(ResponseStatusException.class, () -> drugServiceImpl.getDrugById(id));
+        assertThrows(ResponseStatusException.class, () -> drugServiceImpl.getDrugDtoById(id));
     assertEquals("404 NOT_FOUND \"Drug with this name doesn't exist.\"", exception.getMessage());
   }
 

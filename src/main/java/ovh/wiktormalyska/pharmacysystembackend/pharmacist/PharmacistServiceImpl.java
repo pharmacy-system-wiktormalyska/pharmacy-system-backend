@@ -29,7 +29,12 @@ public class PharmacistServiceImpl implements PharmacistService {
 
   @Override
   public PharmacistResponseDTO getPharmacistDtoById(Long id) {
-    return PharmacistMapper.toDTO(getPharmacistById(id));
+    return PharmacistMapper.toDTO(getPharmacist(id));
+  }
+
+  @Override
+  public Pharmacist getPharmacistById(Long id) {
+    return getPharmacist(id);
   }
 
   @Override
@@ -64,7 +69,7 @@ public class PharmacistServiceImpl implements PharmacistService {
   }
 
   // Utility
-  private @NotNull Pharmacist getPharmacistById(Long id) {
+  private @NotNull Pharmacist getPharmacist(Long id) {
     Optional<Pharmacist> pharmacistOptional = pharmacistRepository.findById(id);
 
     if (pharmacistOptional.isEmpty()) {

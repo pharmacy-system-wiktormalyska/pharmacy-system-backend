@@ -44,6 +44,7 @@ public class Manager implements UserDetails {
   @ManyToMany
   private List<Pharmacy> pharmacies;
 
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
 
   private String password;

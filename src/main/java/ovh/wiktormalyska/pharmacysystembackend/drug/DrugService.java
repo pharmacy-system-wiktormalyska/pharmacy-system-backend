@@ -3,9 +3,11 @@ package ovh.wiktormalyska.pharmacysystembackend.drug;
 public interface DrugService {
   DrugResponseDTO addNewDrug(DrugRequestDTO drugRequestDTO);
 
-  DrugResponseDTO getDrugByName(String name);
+  DrugResponseDTO getDrugDtoByName(String name);
 
-  DrugResponseDTO getDrugById(Long id);
+  DrugResponseDTO getDrugDtoById(Long id);
+
+  Drug getDrugById(Long id);
 
   DrugResponseDTO updateDrug(DrugRequestDTO drugRequestDTO);
 
