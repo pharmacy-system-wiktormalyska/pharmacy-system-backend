@@ -12,7 +12,8 @@ public class PharmacistController {
   }
 
   @PostMapping("add")
-  public PharmacistResponseDTO addNewPharmacist(@RequestBody PharmacistRequestDTO pharmacistRequestDTO) {
+  public PharmacistResponseDTO addNewPharmacist(
+      @RequestBody PharmacistRequestDTO pharmacistRequestDTO) {
     return pharmacistService.addNewPharmacist(pharmacistRequestDTO);
   }
 
@@ -22,7 +23,8 @@ public class PharmacistController {
   }
 
   @PutMapping("update")
-  public PharmacistResponseDTO updatePharmacist(@RequestBody PharmacistRequestDTO pharmacistRequestDTO) {
+  public PharmacistResponseDTO updatePharmacist(
+      @RequestBody PharmacistRequestDTO pharmacistRequestDTO) {
     return pharmacistService.updatePharmacist(pharmacistRequestDTO);
   }
 

@@ -12,7 +12,8 @@ public class AdministratorController {
   }
 
   @PostMapping("add")
-  public AdministratorResponseDTO addNewAdministrator(@RequestBody AdministratorRequestDTO administratorRequestDTO) {
+  public AdministratorResponseDTO addNewAdministrator(
+      @RequestBody AdministratorRequestDTO administratorRequestDTO) {
     return administratorService.addNewAdministrator(administratorRequestDTO);
   }
 
@@ -22,7 +23,8 @@ public class AdministratorController {
   }
 
   @PutMapping("update")
-  public AdministratorResponseDTO updateAdministrator(@RequestBody AdministratorRequestDTO administratorRequestDTO) {
+  public AdministratorResponseDTO updateAdministrator(
+      @RequestBody AdministratorRequestDTO administratorRequestDTO) {
     return administratorService.updateAdministrator(administratorRequestDTO);
   }
 

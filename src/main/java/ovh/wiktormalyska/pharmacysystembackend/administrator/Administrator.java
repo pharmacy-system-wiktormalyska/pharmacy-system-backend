@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 import ovh.wiktormalyska.pharmacysystembackend.security.UserRole;
 
 /* Fields for this class have been determined

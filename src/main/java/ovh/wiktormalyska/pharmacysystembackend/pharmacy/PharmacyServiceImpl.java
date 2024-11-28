@@ -17,7 +17,8 @@ public class PharmacyServiceImpl implements PharmacyService {
 
   @Override
   public PharmacyResponseDTO addNewPharmacy(PharmacyRequestDTO pharmacyRequestDTO) {
-    return PharmacyMapper.toDTO(pharmacyRepository.save(PharmacyMapper.fromDTO(pharmacyRequestDTO)));
+    return PharmacyMapper.toDTO(
+        pharmacyRepository.save(PharmacyMapper.fromDTO(pharmacyRequestDTO)));
   }
 
   @Override
@@ -55,7 +56,8 @@ public class PharmacyServiceImpl implements PharmacyService {
     Optional<Pharmacy> PharmacyOptional = pharmacyRepository.findById(id);
 
     if (PharmacyOptional.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pharmacy with this name doesn't exist.");
+      throw new ResponseStatusException(
+          HttpStatus.NOT_FOUND, "Pharmacy with this name doesn't exist.");
     }
 
     return PharmacyOptional.get();

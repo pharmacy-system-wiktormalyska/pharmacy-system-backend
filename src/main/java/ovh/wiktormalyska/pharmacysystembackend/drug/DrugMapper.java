@@ -2,7 +2,6 @@ package ovh.wiktormalyska.pharmacysystembackend.drug;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class DrugMapper {
   public static DrugResponseDTO toDTO(@NotNull Drug drug) {

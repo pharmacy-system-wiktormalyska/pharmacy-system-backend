@@ -16,7 +16,8 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public AdministratorResponseDTO addNewAdministrator(AdministratorRequestDTO administratorRequestDTO) {
+  public AdministratorResponseDTO addNewAdministrator(
+      AdministratorRequestDTO administratorRequestDTO) {
     Administrator administrator = AdministratorMapper.fromDTO(administratorRequestDTO);
 
     return AdministratorMapper.toDTO(administrator);
@@ -66,8 +67,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     if (!administratorOptional.get().isActive()) {
-      throw new ResponseStatusException(
-          HttpStatus.CONFLICT, "Administrator has been deleted.");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Administrator has been deleted.");
     }
 
     return administratorOptional.get();

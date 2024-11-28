@@ -2,7 +2,6 @@ package ovh.wiktormalyska.pharmacysystembackend.manager;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

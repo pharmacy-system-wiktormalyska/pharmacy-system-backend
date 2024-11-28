@@ -21,7 +21,8 @@ public class ManagerServiceImpl implements ManagerService {
   @Override
   public ManagerResponseDTO addNewManager(ManagerRequestDTO managerRequestDTO) {
     Manager manager = ManagerMapper.fromDTO(managerRequestDTO);
-    manager.setPharmacies(managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
+    manager.setPharmacies(
+        managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
 
     return ManagerMapper.toDTO(manager);
   }
@@ -32,8 +33,7 @@ public class ManagerServiceImpl implements ManagerService {
   }
 
   @Override
-  public ManagerResponseDTO updateManager(
-      @NotNull ManagerRequestDTO managerRequestDTO) {
+  public ManagerResponseDTO updateManager(@NotNull ManagerRequestDTO managerRequestDTO) {
     Manager manager = getManagerById(managerRequestDTO.getId());
 
     manager.setName(managerRequestDTO.getName());
@@ -48,7 +48,8 @@ public class ManagerServiceImpl implements ManagerService {
     manager.setMothersName(managerRequestDTO.getMothersName());
     manager.setEducation(managerRequestDTO.getEducation());
 
-    manager.setPharmacies(managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
+    manager.setPharmacies(
+        managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
 
     manager.setModificationDateTime(LocalDateTime.now());
 
@@ -72,8 +73,7 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     if (!managerOptional.get().isActive()) {
-      throw new ResponseStatusException(
-          HttpStatus.CONFLICT, "Manager has been deleted.");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Manager has been deleted.");
     }
 
     return managerOptional.get();
@@ -81,8 +81,7 @@ public class ManagerServiceImpl implements ManagerService {
 
   private @NotNull Manager removeManager(@NotNull Manager manager) {
     if (!manager.isActive()) {
-      throw new ResponseStatusException(
-          HttpStatus.CONFLICT, "Manager has already been deleted.");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Manager has already been deleted.");
     }
     manager.setActive(false);
 

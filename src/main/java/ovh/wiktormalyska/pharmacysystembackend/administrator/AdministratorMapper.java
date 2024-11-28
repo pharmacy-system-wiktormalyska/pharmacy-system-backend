@@ -22,7 +22,8 @@ public class AdministratorMapper {
         .build();
   }
 
-  public static @NotNull Administrator fromDTO(@NotNull AdministratorRequestDTO administratorRequestDTO) {
+  public static @NotNull Administrator fromDTO(
+      @NotNull AdministratorRequestDTO administratorRequestDTO) {
     return Administrator.builder()
         .id(administratorRequestDTO.getId())
         .name(administratorRequestDTO.getName())

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
-  private final long jwtExpiration = 3600000;
+  private final long jwtExpiration = 43200; // 12 hours
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -30,10 +30,8 @@ public class JwtService {
   }
 
   public String generateToken(@NotNull UserDetails userDetails) {
-    Collection<String> authorities = userDetails.getAuthorities()
-        .stream()
-        .map(GrantedAuthority::getAuthority)
-        .toList();
+    Collection<String> authorities =
+        userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
     Map<String, Object> info = new HashMap<>();
     info.put("authorities", authorities);
@@ -50,12 +48,8 @@ public class JwtService {
   }
 
   private String buildToken(
-      Map<String, Object> extraClaims,
-      @NotNull UserDetails userDetails,
-      long expiration
-  ) {
-    return Jwts
-        .builder()
+      Map<String, Object> extraClaims, @NotNull UserDetails userDetails, long expiration) {
+    return Jwts.builder()
         .setClaims(extraClaims)
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -78,8 +72,7 @@ public class JwtService {
   }
 
   private Claims extractAllClaims(String token) {
-    return Jwts
-        .parserBuilder()
+    return Jwts.parserBuilder()
         .setSigningKey(getSignInKey())
         .build()
         .parseClaimsJws(token)

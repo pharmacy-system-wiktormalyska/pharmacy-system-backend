@@ -13,7 +13,8 @@ public class PharmacistServiceImpl implements PharmacistService {
   private final PharmacistRepository pharmacistRepository;
   private final PharmacyServiceImpl pharmacyServiceImpl;
 
-  PharmacistServiceImpl(PharmacistRepository pharmacistRepository, PharmacyServiceImpl pharmacyServiceImpl) {
+  PharmacistServiceImpl(
+      PharmacistRepository pharmacistRepository, PharmacyServiceImpl pharmacyServiceImpl) {
     this.pharmacistRepository = pharmacistRepository;
     this.pharmacyServiceImpl = pharmacyServiceImpl;
   }
@@ -72,8 +73,7 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     if (!pharmacistOptional.get().isActive()) {
-      throw new ResponseStatusException(
-          HttpStatus.CONFLICT, "Pharmacist has been deleted.");
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Pharmacist has been deleted.");
     }
 
     return pharmacistOptional.get();

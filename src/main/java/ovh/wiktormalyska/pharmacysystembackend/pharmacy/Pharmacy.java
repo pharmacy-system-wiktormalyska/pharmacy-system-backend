@@ -4,9 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 /* Fields for this class have been determined
  * based on data provided in
@@ -23,12 +22,12 @@ public class Pharmacy {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // System id
 
-  private Long pharmacyId;   // Given after registering the pharmacy in Poland
+  private Long pharmacyId; // Given after registering the pharmacy in Poland
   private String name;
   private String address;
   private PharmacyType type;
   private String owner;
-  private boolean isPharmacyStatusActive;    // Official status
+  private boolean isPharmacyStatusActive; // Official status
 
   // Contact details
   private String phone;
