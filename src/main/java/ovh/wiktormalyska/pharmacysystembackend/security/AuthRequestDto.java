@@ -9,3 +9,8 @@ public class AuthRequestDto {
   private String username;
   private String password;
 }
+
+/*
+"username": "string",
+"password": "string"
+*/

@@ -7,24 +7,21 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacist.PharmacistRepository;
+import ovh.wiktormalyska.pharmacysystembackend.user.UserService;
 
 @Configuration
 public class ApplicationConfiguration {
-  private final PharmacistRepository pharmacistRepository;
 
-  public ApplicationConfiguration(PharmacistRepository pharmacistRepository) {
-    this.pharmacistRepository = pharmacistRepository;
+  private final UserService userService;
+
+  public ApplicationConfiguration(UserService userService) {
+    this.userService = userService;
   }
 
   @Bean
   UserDetailsService userDetailsService() {
-    return username ->
-        pharmacistRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    return userService::checkIfUserExists;
   }
 
   @Bean

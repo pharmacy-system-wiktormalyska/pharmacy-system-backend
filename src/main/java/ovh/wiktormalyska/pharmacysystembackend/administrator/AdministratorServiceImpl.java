@@ -6,21 +6,25 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import ovh.wiktormalyska.pharmacysystembackend.security.AuthService;
 
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
   private final AdministratorRepository administratorRepository;
+  private final AuthService authService;
 
-  AdministratorServiceImpl(AdministratorRepository administratorRepository) {
+  AdministratorServiceImpl(AdministratorRepository administratorRepository, AuthService authService) {
     this.administratorRepository = administratorRepository;
+    this.authService = authService;
   }
 
   @Override
   public AdministratorResponseDTO addNewAdministrator(
       AdministratorRequestDTO administratorRequestDTO) {
     Administrator administrator = AdministratorMapper.fromDTO(administratorRequestDTO);
+    administrator.setPassword(authService.encodePassword(administrator.getPassword()));
 
-    return AdministratorMapper.toDTO(administrator);
+    return AdministratorMapper.toDTO(administratorRepository.save(administrator));
   }
 
   @Override

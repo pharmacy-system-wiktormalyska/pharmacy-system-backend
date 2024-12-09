@@ -27,6 +27,7 @@ public class AdministratorMapper {
     return Administrator.builder()
         .id(administratorRequestDTO.getId())
         .name(administratorRequestDTO.getName())
+        .username(administratorRequestDTO.getUsername())
         .surname(administratorRequestDTO.getSurname())
         .familyName(administratorRequestDTO.getFamilyName())
         .placeOfBirth(administratorRequestDTO.getPlaceOfBirth())
@@ -37,6 +38,7 @@ public class AdministratorMapper {
         .fathersName(administratorRequestDTO.getFathersName())
         .mothersName(administratorRequestDTO.getMothersName())
         .education(administratorRequestDTO.getEducation())
+        .password(administratorRequestDTO.getPassword())
         .build();
   }
 }
