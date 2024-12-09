@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
-  private final long jwtExpiration = 43200; // 12 hours
+  private final long jwtExpiration = 43200000; // 12 hours; in millis
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
