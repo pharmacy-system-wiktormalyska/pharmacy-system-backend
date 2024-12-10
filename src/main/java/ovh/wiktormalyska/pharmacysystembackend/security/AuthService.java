@@ -6,32 +6,20 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ovh.wiktormalyska.pharmacysystembackend.administrator.AdministratorRepository;
-import ovh.wiktormalyska.pharmacysystembackend.manager.ManagerRepository;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacist.PharmacistRepository;
 import ovh.wiktormalyska.pharmacysystembackend.user.UserService;
 
 @Service
 public class AuthService {
-  private final PharmacistRepository pharmacistRepository;
-
   private final AuthenticationManager authenticationManager;
   private final BCryptPasswordEncoder passwordEncoder;
-  private final ManagerRepository managerRepository;
-  private final AdministratorRepository administratorRepository;
   private final UserService userService;
 
   public AuthService(
-      PharmacistRepository pharmacistRepository,
       AuthenticationManager authenticationManager,
       BCryptPasswordEncoder passwordEncoder,
-      ManagerRepository managerRepository,
-      AdministratorRepository administratorRepository, UserService userService) {
+      UserService userService) {
     this.authenticationManager = authenticationManager;
-    this.pharmacistRepository = pharmacistRepository;
     this.passwordEncoder = passwordEncoder;
-    this.managerRepository = managerRepository;
-    this.administratorRepository = administratorRepository;
     this.userService = userService;
   }
 

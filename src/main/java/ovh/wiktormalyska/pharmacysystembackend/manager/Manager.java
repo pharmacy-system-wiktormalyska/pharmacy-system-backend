@@ -63,7 +63,7 @@ public class Manager implements UserDetails {
 
   @Override
   public String getUsername() {
-    return username;
+    return (name == null || surname == null) ? username : (name + " " + surname);
   }
 
   @Override
