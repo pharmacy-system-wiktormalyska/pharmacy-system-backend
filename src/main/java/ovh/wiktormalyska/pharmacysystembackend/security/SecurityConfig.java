@@ -69,6 +69,7 @@ public class SecurityConfig {
             "https://pharmacy.wiktormalyska.ovh"));
     configuration.setAllowedMethods(List.of("*"));
     configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
