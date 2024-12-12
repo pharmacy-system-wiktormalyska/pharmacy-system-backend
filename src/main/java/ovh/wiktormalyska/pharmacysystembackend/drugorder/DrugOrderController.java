@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.drugorder;
 
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/drug/order/")
@@ -19,6 +20,11 @@ public class DrugOrderController {
   @GetMapping("get/id/{id}")
   public DrugOrderResponseDTO getDrugOrderById(@PathVariable Long id) {
     return drugService.getDrugOrderById(id);
+  }
+
+  @GetMapping("get/all")
+  public List<DrugOrderResponseDTO> getDrugOrderById() {
+    return drugService.getAllDrugOrders();
   }
 
   @PutMapping("update")

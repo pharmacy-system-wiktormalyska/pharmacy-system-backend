@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.drugorder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   private final PharmacistService pharmacistService;
   private final ManagerService managerService;
 
-  DrugOrderServiceImpl(DrugOrderRepository drugRepository, DrugRepository drugRepository1, DrugService drugService, PharmacistService pharmacistService, ManagerService managerService) {
-    this.drugOrderRepository = drugRepository;
+  DrugOrderServiceImpl(DrugOrderRepository drugOrderRepository, DrugRepository drugRepository1, DrugService drugService, PharmacistService pharmacistService, ManagerService managerService, DrugRepository drugRepository) {
+    this.drugOrderRepository = drugOrderRepository;
     this.drugService = drugService;
     this.pharmacistService = pharmacistService;
     this.managerService = managerService;
@@ -54,6 +55,11 @@ public class DrugOrderServiceImpl implements DrugOrderService {
     DrugOrder drugOrder = getDrugOrder(id);
 
     return DrugOrderMapper.toDTO(removeDrugOrder(drugOrder));
+  }
+
+  @Override
+  public List<DrugOrderResponseDTO> getAllDrugOrders() {
+    return drugOrderRepository.findAll().stream().map(DrugOrderMapper::toDTO).toList();
   }
 
   // Utility
