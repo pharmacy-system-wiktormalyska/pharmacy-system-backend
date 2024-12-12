@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.drug;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,11 @@ public class DrugServiceImpl implements DrugService {
     Drug drug = getDrug(id);
 
     return DrugMapper.toDTO(removeDrug(drug));
+  }
+
+  @Override
+  public List<DrugResponseDTO> getAllDrugs() {
+    return drugRepository.findAll().stream().map(DrugMapper::toDTO).toList();
   }
 
   // Utility

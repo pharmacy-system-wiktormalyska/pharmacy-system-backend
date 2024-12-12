@@ -1,5 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.drug;
 
+import java.util.List;
+
 public interface DrugService {
   DrugResponseDTO addNewDrug(DrugRequestDTO drugRequestDTO);
 
@@ -14,4 +16,6 @@ public interface DrugService {
   DrugResponseDTO removeDrugByName(String name);
 
   DrugResponseDTO removeDrugById(Long id);
+
+  List<DrugResponseDTO> getAllDrugs();
 }

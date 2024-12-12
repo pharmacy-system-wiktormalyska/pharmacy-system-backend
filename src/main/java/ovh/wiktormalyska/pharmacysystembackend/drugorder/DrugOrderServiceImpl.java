@@ -19,7 +19,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   private final PharmacistService pharmacistService;
   private final ManagerService managerService;
 
-  DrugOrderServiceImpl(DrugOrderRepository drugOrderRepository, DrugRepository drugRepository1, DrugService drugService, PharmacistService pharmacistService, ManagerService managerService, DrugRepository drugRepository) {
+  DrugOrderServiceImpl(DrugOrderRepository drugOrderRepository, DrugService drugService, PharmacistService pharmacistService, ManagerService managerService) {
     this.drugOrderRepository = drugOrderRepository;
     this.drugService = drugService;
     this.pharmacistService = pharmacistService;
