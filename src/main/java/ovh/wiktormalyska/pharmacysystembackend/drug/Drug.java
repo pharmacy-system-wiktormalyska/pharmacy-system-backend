@@ -31,6 +31,7 @@ public class Drug {
   private String atcCode;
   private String strength;
 
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
 
   @Builder.Default private boolean isActive = true;
