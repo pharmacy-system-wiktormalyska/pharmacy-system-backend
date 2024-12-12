@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
 @RestController
 @RequestMapping("auth")
@@ -19,7 +20,7 @@ public class AuthController {
 
   @PostMapping("login")
   public AuthResponseDto login(@RequestBody AuthRequestDto authRequestDto) {
-    UserDetails authenticatedUser = authService.login(authRequestDto);
+    CustomUserDetails authenticatedUser = authService.login(authRequestDto);
 
     return new AuthResponseDto(jwtService.generateToken(authenticatedUser));
   }

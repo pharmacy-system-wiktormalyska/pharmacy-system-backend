@@ -23,14 +23,14 @@ public class UserService {
     this.administratorRepository = administratorRepository;
   }
 
-  public UserDetails checkIfUserExists(String username) {
+  public CustomUserDetails checkIfUserExists(String username) {
     Pharmacist pharmacist =
         pharmacistRepository.findByUsername(username).orElse(null);
     Manager manager = managerRepository.findByUsername(username).orElse(null);
     Administrator administrator =
         administratorRepository.findByUsername(username).orElse(null);
 
-    UserDetails userDetails =
+    CustomUserDetails userDetails =
         pharmacist == null ? (manager == null ? (administrator) : manager) : pharmacist;
 
     if (userDetails == null) {

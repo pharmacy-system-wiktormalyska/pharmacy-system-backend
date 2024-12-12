@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
 @Service
 public class JwtService {
@@ -29,12 +30,13 @@ public class JwtService {
     return claimsResolver.apply(claims);
   }
 
-  public String generateToken(@NotNull UserDetails userDetails) {
+  public String generateToken(@NotNull CustomUserDetails userDetails) {
     Collection<String> authorities =
         userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
     Map<String, Object> info = new HashMap<>();
     info.put("authorities", authorities);
+    info.put("name", userDetails.getRealName());
 
     return generateToken(info, userDetails);
   }

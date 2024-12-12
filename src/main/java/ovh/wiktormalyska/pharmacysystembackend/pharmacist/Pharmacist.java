@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 import ovh.wiktormalyska.pharmacysystembackend.security.UserRole;
+import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
 /* Fields for this class have been determined
  * based on data provided in
@@ -21,7 +22,7 @@ import ovh.wiktormalyska.pharmacysystembackend.security.UserRole;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pharmacist implements UserDetails {
+public class Pharmacist implements CustomUserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -63,7 +64,7 @@ public class Pharmacist implements UserDetails {
 
   @Override
   public String getUsername() {
-    return (name == null || surname == null) ? username : (name + " " + surname);
+    return username;
   }
 
   @Override
@@ -84,5 +85,10 @@ public class Pharmacist implements UserDetails {
   @Override
   public boolean isEnabled() {
     return isActive;
+  }
+
+  @Override
+  public String getRealName() {
+    return (name == null || surname == null) ? username : (name + " " + surname);
   }
 }

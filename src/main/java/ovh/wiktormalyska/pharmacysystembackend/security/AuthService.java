@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 import ovh.wiktormalyska.pharmacysystembackend.user.UserService;
 
 @Service
@@ -23,8 +24,8 @@ public class AuthService {
     this.userService = userService;
   }
 
-  public UserDetails login(@NotNull AuthRequestDto authRequestDto) {
-    UserDetails userDetails = userService.checkIfUserExists(authRequestDto.getUsername());
+  public CustomUserDetails login(@NotNull AuthRequestDto authRequestDto) {
+    CustomUserDetails userDetails = userService.checkIfUserExists(authRequestDto.getUsername());
 
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
