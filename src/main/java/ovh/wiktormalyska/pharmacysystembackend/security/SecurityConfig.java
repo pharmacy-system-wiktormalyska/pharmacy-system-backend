@@ -39,7 +39,7 @@ public class SecurityConfig {
                     .hasAnyAuthority("PHARMACIST", "MANAGER", "ADMINISTRATOR")
                     .requestMatchers("drug/order/**")
                     .hasAnyAuthority("MANAGER", "ADMINISTRATOR")
-                    .requestMatchers("drug/order/add", "drug/order/get")
+                    .requestMatchers("drug/order/add", "drug/order/get/id/**")
                     .hasAnyAuthority("PHARMACIST", "MANAGER", "ADMINISTRATOR")
                     .requestMatchers("pharmacy/**", "pharmacist/**", "manager/**")
                     .hasAnyAuthority("MANAGER", "ADMINISTRATOR")
