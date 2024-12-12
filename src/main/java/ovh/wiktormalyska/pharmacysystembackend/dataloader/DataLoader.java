@@ -20,7 +20,7 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Administrator administrator = Administrator.builder().username("admin").password(passwordEncoder.encode("admin")).build();
+        Administrator administrator = Administrator.builder().username("admin").password(passwordEncoder.encode("admin")).name("adminName").surname("adminSurname").build();
         System.out.println(administrator);
         administratorRepository.findByUsername("admin").ifPresentOrElse(
                 admin -> System.out.println("Admin already exists"),
