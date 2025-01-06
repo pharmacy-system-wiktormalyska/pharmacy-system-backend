@@ -77,15 +77,23 @@ public class JwtService {
 
   private Claims extractAllClaims(String token) {
     return Jwts.parser()
-        .verifyWith(getSignInKey())
+        .verifyWith((SecretKey)getSignInKey())
         .build()
         .parseSignedClaims(token)
         .getPayload();
   }
 
-  private @NotNull SecretKey getSignInKey() {
+  private @NotNull Key getSignInKey() {
     String secretKey = "b69fd3191bfef057ea309c8945a46a78a53acf7aab7cedd938dddae6e98a424d";
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
+  }
+  public boolean validateToken(String token){
+    Jwts.parser()
+            .verifyWith((SecretKey) getSignInKey())
+            .build()
+            .parse(token);
+    return true;
+
   }
 }
