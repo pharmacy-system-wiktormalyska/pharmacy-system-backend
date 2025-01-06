@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
+import javax.crypto.SecretKey;
+
 @Service
 public class JwtService {
   private final long jwtExpiration = 43200000; // 12 hours; in millis
@@ -52,11 +54,11 @@ public class JwtService {
   private String buildToken(
       Map<String, Object> extraClaims, @NotNull UserDetails userDetails, long expiration) {
     return Jwts.builder()
-        .setClaims(extraClaims)
-        .setSubject(userDetails.getUsername())
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + expiration))
-        .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+        .claims(extraClaims)
+        .subject(userDetails.getUsername())
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + expiration))
+        .signWith(getSignInKey())
         .compact();
   }
 
@@ -74,14 +76,14 @@ public class JwtService {
   }
 
   private Claims extractAllClaims(String token) {
-    return Jwts.parserBuilder()
-        .setSigningKey(getSignInKey())
+    return Jwts.parser()
+        .verifyWith(getSignInKey())
         .build()
-        .parseClaimsJws(token)
-        .getBody();
+        .parseSignedClaims(token)
+        .getPayload();
   }
 
-  private @NotNull Key getSignInKey() {
+  private @NotNull SecretKey getSignInKey() {
     String secretKey = "b69fd3191bfef057ea309c8945a46a78a53acf7aab7cedd938dddae6e98a424d";
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
