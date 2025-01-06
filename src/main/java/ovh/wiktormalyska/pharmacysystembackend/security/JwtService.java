@@ -88,12 +88,4 @@ public class JwtService {
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }
-  public boolean validateToken(String token){
-    Jwts.parser()
-            .verifyWith((SecretKey) getSignInKey())
-            .build()
-            .parse(token);
-    return true;
-
-  }
 }
