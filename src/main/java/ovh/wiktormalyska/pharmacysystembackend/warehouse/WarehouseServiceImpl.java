@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.warehouse;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,6 @@ public class WarehouseServiceImpl implements WarehouseService {
 
   @Override
   public DrugOrder completeOrder(@NotNull DrugOrder drugOrder) {
-    // Find warehouse item
-    // Add quantity to warehouse item
-
     Optional<WarehouseItem> warehouseItem =
         warehouseItemRepository.findByWarehouseAndDrug(
             drugOrder.getWarehouse(), drugOrder.getDrug());
@@ -45,5 +43,10 @@ public class WarehouseServiceImpl implements WarehouseService {
     drugOrder.setOrderStatus(OrderStatus.COMPLETED);
 
     return drugOrder;
+  }
+
+  @Override
+  public List<WarehouseResponseDTO> getAllWarehouseDtos() {
+    return warehouseRepository.findAll().stream().map(WarehouseMapper::toDTO).toList();
   }
 }

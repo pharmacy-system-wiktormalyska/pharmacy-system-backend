@@ -31,7 +31,7 @@ public class Drug {
   private String atcCode;
   private String strength;
 
-  private String imageUrl;
+  private String relativeImageUrl;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;

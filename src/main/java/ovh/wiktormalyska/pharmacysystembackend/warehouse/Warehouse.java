@@ -29,7 +29,7 @@ public class Warehouse {
   // One pharmacy can use many warehouses
   // One warehouse can stock up multiple pharmacies
   @ManyToMany
-  private List<Pharmacy> pharmacy;
+  private List<Pharmacy> pharmacies;
 
   @OneToMany
   private List<DrugOrder> drugOrders;
