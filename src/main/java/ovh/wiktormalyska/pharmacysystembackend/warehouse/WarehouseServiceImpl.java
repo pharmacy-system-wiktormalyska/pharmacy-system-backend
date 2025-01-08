@@ -49,4 +49,20 @@ public class WarehouseServiceImpl implements WarehouseService {
   public List<WarehouseResponseDTO> getAllWarehouseDtos() {
     return warehouseRepository.findAll().stream().map(WarehouseMapper::toDTO).toList();
   }
+
+  @Override
+  public WarehouseResponseDTO getWarehouseDtoById(Long id) {
+    return WarehouseMapper.toDTO(getWarehouseById(id));
+  }
+
+  // Utility
+  public Warehouse getWarehouseById(Long id) {
+    Optional<Warehouse> warehouse = warehouseRepository.findById(id);
+
+    if (warehouse.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Warehouse not found");
+    }
+
+    return warehouse.get();
+  }
 }

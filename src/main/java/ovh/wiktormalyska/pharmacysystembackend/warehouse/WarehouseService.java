@@ -8,4 +8,6 @@ public interface WarehouseService {
   DrugOrder completeOrder(DrugOrder drugOrder);
 
   List<WarehouseResponseDTO> getAllWarehouseDtos();
+
+  WarehouseResponseDTO getWarehouseDtoById(Long id);
 }
