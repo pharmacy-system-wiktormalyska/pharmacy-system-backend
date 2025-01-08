@@ -27,6 +27,21 @@ public class DrugOrderController {
     return drugService.getAllDrugOrders();
   }
 
+  @PatchMapping("accept/id/{id}")
+  public DrugOrderResponseDTO acceptDrugOrderById(@PathVariable Long id) {
+    return drugService.acceptDrugOrderById(id);
+  }
+
+  @PatchMapping("reject/id/{id}")
+  public DrugOrderResponseDTO rejectDrugOrderById(@PathVariable Long id) {
+    return drugService.rejectDrugOrderById(id);
+  }
+
+  @PatchMapping("complete/id/{id}")
+  public DrugOrderResponseDTO completeDrugOrderById(@PathVariable Long id) {
+    return drugService.completeDrugOrderById(id);
+  }
+
   @PutMapping("update")
   public DrugOrderResponseDTO updateDrugOrder(@RequestBody DrugOrderRequestDTO drugRequestDTO) {
     return drugService.updateDrugOrder(drugRequestDTO);

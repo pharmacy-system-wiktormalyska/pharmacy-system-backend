@@ -7,10 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ovh.wiktormalyska.pharmacysystembackend.drug.DrugRepository;
 import ovh.wiktormalyska.pharmacysystembackend.drug.DrugService;
 import ovh.wiktormalyska.pharmacysystembackend.manager.ManagerService;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacist.PharmacistService;
+import ovh.wiktormalyska.pharmacysystembackend.warehouse.WarehouseService;
+import ovh.wiktormalyska.pharmacysystembackend.warehouse.WarehouseServiceImpl;
 
 @Service
 public class DrugOrderServiceImpl implements DrugOrderService {
@@ -18,12 +19,20 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   private final DrugService drugService;
   private final PharmacistService pharmacistService;
   private final ManagerService managerService;
+  private final WarehouseService warehouseService;
 
-  DrugOrderServiceImpl(DrugOrderRepository drugOrderRepository, DrugService drugService, PharmacistService pharmacistService, ManagerService managerService) {
+  DrugOrderServiceImpl(
+      DrugOrderRepository drugOrderRepository,
+      DrugService drugService,
+      PharmacistService pharmacistService,
+      ManagerService managerService,
+      WarehouseServiceImpl warehouseServiceImpl,
+      WarehouseService warehouseService) {
     this.drugOrderRepository = drugOrderRepository;
     this.drugService = drugService;
     this.pharmacistService = pharmacistService;
     this.managerService = managerService;
+    this.warehouseService = warehouseService;
   }
 
   @Override
@@ -62,15 +71,77 @@ public class DrugOrderServiceImpl implements DrugOrderService {
     return drugOrderRepository.findAll().stream().map(DrugOrderMapper::toDTO).toList();
   }
 
+  @Override
+  public DrugOrderResponseDTO acceptDrugOrderById(Long id) {
+    DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
+
+    drugOrder.setModificationDateTime(LocalDateTime.now());
+    drugOrder.setOrderStatus(OrderStatus.ACCEPTED);
+
+    return DrugOrderMapper.toDTO(drugOrderRepository.save(drugOrder));
+  }
+
+  @Override
+  public DrugOrderResponseDTO rejectDrugOrderById(Long id) {
+    DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
+
+    drugOrder.setModificationDateTime(LocalDateTime.now());
+    drugOrder.setOrderStatus(OrderStatus.REJECTED);
+
+    return DrugOrderMapper.toDTO(drugOrderRepository.save(drugOrder));
+  }
+
+  @Override
+  public DrugOrderResponseDTO completeDrugOrderById(Long id) {
+    DrugOrder drugOrder = getDrugOrder(id);
+
+    if (drugOrder.getOrderStatus() != OrderStatus.ACCEPTED) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Drug order has not been accepted yet.");
+    }
+
+    drugOrder.setModificationDateTime(LocalDateTime.now());
+
+    DrugOrder processedOrder = warehouseService.completeOrder(drugOrder);
+
+    return DrugOrderMapper.toDTO(drugOrderRepository.save(processedOrder));
+  }
+
   // Utility
   private @NotNull DrugOrder getDrugOrder(Long id) {
     Optional<DrugOrder> drugOptional = drugOrderRepository.findById(id);
 
     if (drugOptional.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "DrugOrder with this name doesn't exist.");
+      throw new ResponseStatusException(
+          HttpStatus.NOT_FOUND, "DrugOrder with this name doesn't exist.");
     }
 
     return drugOptional.get();
+  }
+
+  public @NotNull DrugOrder getDrugOrderWithStatusCheck(Long id) {
+    DrugOrder drugOrder = getDrugOrder(id);
+
+    if (!drugOrder.isActive()) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "DrugOrder has already been deleted.");
+    }
+
+    if (drugOrder.getOrderStatus() == OrderStatus.ACCEPTED) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Drug order has already been accepted.");
+    }
+
+    if (drugOrder.getOrderStatus() == OrderStatus.REJECTED) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Drug order has already been rejected.");
+    }
+
+    if (drugOrder.getOrderStatus() == OrderStatus.COMPLETED) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Drug order has already been completed.");
+    }
+
+    return drugOrder;
   }
 
   private @NotNull DrugOrder removeDrugOrder(@NotNull DrugOrder drugOrder) {

@@ -12,4 +12,10 @@ public interface DrugOrderService {
   DrugOrderResponseDTO removeDrugOrderById(Long id);
 
   List<DrugOrderResponseDTO> getAllDrugOrders();
+
+  DrugOrderResponseDTO completeDrugOrderById(Long id);
+
+  DrugOrderResponseDTO acceptDrugOrderById(Long id);
+
+  DrugOrderResponseDTO rejectDrugOrderById(Long id);
 }
