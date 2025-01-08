@@ -1,11 +1,10 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacy;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import lombok.*;
+import ovh.wiktormalyska.pharmacysystembackend.manager.Manager;
 
 /* Fields for this class have been determined
  * based on data provided in
@@ -33,6 +32,9 @@ public class Pharmacy {
   private String phone;
   private String email;
   private String website;
+
+  @OneToOne
+  private Manager manager;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;
