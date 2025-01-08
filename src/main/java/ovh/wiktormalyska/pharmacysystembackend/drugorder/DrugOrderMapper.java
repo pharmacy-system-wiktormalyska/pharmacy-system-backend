@@ -2,6 +2,10 @@ package ovh.wiktormalyska.pharmacysystembackend.drugorder;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
+import ovh.wiktormalyska.pharmacysystembackend.manager.Manager;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacist.Pharmacist;
+import ovh.wiktormalyska.pharmacysystembackend.warehouse.Warehouse;
 
 public class DrugOrderMapper {
   public static DrugOrderResponseDTO toDTO(@NotNull DrugOrder drugOrder) {
@@ -20,14 +24,19 @@ public class DrugOrderMapper {
   }
 
   @Contract(pure = true)
-  public static @NotNull DrugOrder fromDTO(@NotNull DrugOrderRequestDTO drugRequestDTO) {
-    // TODO: make this work
+  public static @NotNull DrugOrder fromDTO(
+      @NotNull DrugOrderRequestDTO drugRequestDTO,
+      Warehouse warehouse,
+      Drug drug,
+      Pharmacist pharmacist,
+      Manager manager) {
     return DrugOrder.builder()
         .id(drugRequestDTO.getId())
-//        .drug(drugService.getDrugById(drugRequestDTO.getDrugId()))
+        .warehouse(warehouse)
+        .drug(drug)
         .quantity(drugRequestDTO.getQuantity())
-//        .pharmacist(pharmacistService.getPharmacistById(drugRequestDTO.getPharmacistId()))
-//        .manager(managerService.getManagerById(drugRequest
+        .pharmacist(pharmacist)
+        .manager(manager)
         .build();
   }
 }

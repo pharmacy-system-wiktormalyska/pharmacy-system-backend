@@ -7,11 +7,14 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 import ovh.wiktormalyska.pharmacysystembackend.drug.DrugService;
+import ovh.wiktormalyska.pharmacysystembackend.manager.Manager;
 import ovh.wiktormalyska.pharmacysystembackend.manager.ManagerService;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacist.Pharmacist;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacist.PharmacistService;
+import ovh.wiktormalyska.pharmacysystembackend.warehouse.Warehouse;
 import ovh.wiktormalyska.pharmacysystembackend.warehouse.WarehouseService;
-import ovh.wiktormalyska.pharmacysystembackend.warehouse.WarehouseServiceImpl;
 
 @Service
 public class DrugOrderServiceImpl implements DrugOrderService {
@@ -26,7 +29,6 @@ public class DrugOrderServiceImpl implements DrugOrderService {
       DrugService drugService,
       PharmacistService pharmacistService,
       ManagerService managerService,
-      WarehouseServiceImpl warehouseServiceImpl,
       WarehouseService warehouseService) {
     this.drugOrderRepository = drugOrderRepository;
     this.drugService = drugService;
@@ -36,12 +38,19 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   @Override
-  public DrugOrderResponseDTO addNewDrugOrder(DrugOrderRequestDTO drugRequestDTO) {
-    return DrugOrderMapper.toDTO(drugOrderRepository.save(DrugOrderMapper.fromDTO(drugRequestDTO)));
+  public DrugOrderResponseDTO addNewDrugOrder(@NotNull DrugOrderRequestDTO drugRequestDTO) {
+    Warehouse warehouse = warehouseService.getWarehouseById(drugRequestDTO.getWarehouseId());
+    Drug drug = drugService.getDrugById(drugRequestDTO.getDrugId());
+    Pharmacist pharmacist = pharmacistService.getPharmacistById(drugRequestDTO.getPharmacistId());
+    Manager manager = managerService.getManagerById(drugRequestDTO.getManagerId());
+
+    return DrugOrderMapper.toDTO(
+        drugOrderRepository.save(
+            DrugOrderMapper.fromDTO(drugRequestDTO, warehouse, drug, pharmacist, manager)));
   }
 
   @Override
-  public DrugOrderResponseDTO getDrugOrderById(Long id) {
+  public DrugOrderResponseDTO getDrugOrderById(@NotNull Long id) {
     return DrugOrderMapper.toDTO(getDrugOrder(id));
   }
 
@@ -60,7 +69,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   @Override
-  public DrugOrderResponseDTO removeDrugOrderById(Long id) {
+  public DrugOrderResponseDTO removeDrugOrderById(@NotNull Long id) {
     DrugOrder drugOrder = getDrugOrder(id);
 
     return DrugOrderMapper.toDTO(removeDrugOrder(drugOrder));
@@ -72,7 +81,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   @Override
-  public DrugOrderResponseDTO acceptDrugOrderById(Long id) {
+  public DrugOrderResponseDTO acceptDrugOrderById(@NotNull Long id) {
     DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
 
     drugOrder.setModificationDateTime(LocalDateTime.now());
@@ -82,7 +91,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   @Override
-  public DrugOrderResponseDTO rejectDrugOrderById(Long id) {
+  public DrugOrderResponseDTO rejectDrugOrderById(@NotNull Long id) {
     DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
 
     drugOrder.setModificationDateTime(LocalDateTime.now());
@@ -92,7 +101,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   @Override
-  public DrugOrderResponseDTO completeDrugOrderById(Long id) {
+  public DrugOrderResponseDTO completeDrugOrderById(@NotNull Long id) {
     DrugOrder drugOrder = getDrugOrder(id);
 
     if (drugOrder.getDrugOrderStatus() != DrugOrderStatus.ACCEPTED) {
@@ -108,7 +117,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   }
 
   // Utility
-  private @NotNull DrugOrder getDrugOrder(Long id) {
+  private @NotNull DrugOrder getDrugOrder(@NotNull Long id) {
     Optional<DrugOrder> drugOptional = drugOrderRepository.findById(id);
 
     if (drugOptional.isEmpty()) {
@@ -119,7 +128,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
     return drugOptional.get();
   }
 
-  public @NotNull DrugOrder getDrugOrderWithStatusCheck(Long id) {
+  public @NotNull DrugOrder getDrugOrderWithStatusCheck(@NotNull Long id) {
     DrugOrder drugOrder = getDrugOrder(id);
 
     if (!drugOrder.isActive()) {
