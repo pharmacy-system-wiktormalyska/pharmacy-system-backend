@@ -76,7 +76,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
     DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
 
     drugOrder.setModificationDateTime(LocalDateTime.now());
-    drugOrder.setOrderStatus(OrderStatus.ACCEPTED);
+    drugOrder.setDrugOrderStatus(DrugOrderStatus.ACCEPTED);
 
     return DrugOrderMapper.toDTO(drugOrderRepository.save(drugOrder));
   }
@@ -86,7 +86,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
     DrugOrder drugOrder = getDrugOrderWithStatusCheck(id);
 
     drugOrder.setModificationDateTime(LocalDateTime.now());
-    drugOrder.setOrderStatus(OrderStatus.REJECTED);
+    drugOrder.setDrugOrderStatus(DrugOrderStatus.REJECTED);
 
     return DrugOrderMapper.toDTO(drugOrderRepository.save(drugOrder));
   }
@@ -95,7 +95,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
   public DrugOrderResponseDTO completeDrugOrderById(Long id) {
     DrugOrder drugOrder = getDrugOrder(id);
 
-    if (drugOrder.getOrderStatus() != OrderStatus.ACCEPTED) {
+    if (drugOrder.getDrugOrderStatus() != DrugOrderStatus.ACCEPTED) {
       throw new ResponseStatusException(
           HttpStatus.CONFLICT, "Drug order has not been accepted yet.");
     }
@@ -126,17 +126,17 @@ public class DrugOrderServiceImpl implements DrugOrderService {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "DrugOrder has already been deleted.");
     }
 
-    if (drugOrder.getOrderStatus() == OrderStatus.ACCEPTED) {
+    if (drugOrder.getDrugOrderStatus() == DrugOrderStatus.ACCEPTED) {
       throw new ResponseStatusException(
           HttpStatus.CONFLICT, "Drug order has already been accepted.");
     }
 
-    if (drugOrder.getOrderStatus() == OrderStatus.REJECTED) {
+    if (drugOrder.getDrugOrderStatus() == DrugOrderStatus.REJECTED) {
       throw new ResponseStatusException(
           HttpStatus.CONFLICT, "Drug order has already been rejected.");
     }
 
-    if (drugOrder.getOrderStatus() == OrderStatus.COMPLETED) {
+    if (drugOrder.getDrugOrderStatus() == DrugOrderStatus.COMPLETED) {
       throw new ResponseStatusException(
           HttpStatus.CONFLICT, "Drug order has already been completed.");
     }

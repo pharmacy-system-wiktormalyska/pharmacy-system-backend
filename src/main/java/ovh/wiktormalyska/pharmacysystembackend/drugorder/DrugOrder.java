@@ -30,7 +30,7 @@ public class DrugOrder {
   @ManyToOne private Pharmacist pharmacist;
   @ManyToOne private Manager manager;
 
-  @Builder.Default private OrderStatus orderStatus = OrderStatus.PENDING;
+  @Builder.Default private DrugOrderStatus drugOrderStatus = DrugOrderStatus.PENDING;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;

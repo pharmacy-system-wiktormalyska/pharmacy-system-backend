@@ -7,14 +7,15 @@ public class DrugOrderMapper {
   public static DrugOrderResponseDTO toDTO(@NotNull DrugOrder drugOrder) {
     return DrugOrderResponseDTO.builder()
         .id(drugOrder.getId())
+        .warehouseId(drugOrder.getWarehouse().getId())
         .drugId(drugOrder.getDrug().getId())
         .quantity(drugOrder.getQuantity())
         .pharmacistId(drugOrder.getPharmacist().getId())
         .managerId(drugOrder.getManager().getId())
-        .orderStatus(drugOrder.getOrderStatus())
+        .drugOrderStatus(drugOrder.getDrugOrderStatus())
         .creationDateTime(drugOrder.getCreationDateTime())
         .modificationDateTime(drugOrder.getModificationDateTime())
-        .isActive(drugOrder.isActive())
+        .completionDateTime(drugOrder.getCompletionDateTime())
         .build();
   }
 

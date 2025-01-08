@@ -10,6 +10,7 @@ import lombok.Setter;
 public class DrugOrderRequestDTO {
   private Long id;
 
+  private Long warehouseId;
   private Long drugId;
   private Long quantity;
 

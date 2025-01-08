@@ -11,16 +11,16 @@ import lombok.Setter;
 public class DrugOrderResponseDTO {
   private Long id;
 
+  private Long warehouseId;
   private Long drugId;
   private Long quantity;
 
   private long pharmacistId;
   private long managerId;
 
-  private OrderStatus orderStatus;
+  private DrugOrderStatus drugOrderStatus;
 
   private LocalDateTime creationDateTime;
   private LocalDateTime modificationDateTime;
-
-  private boolean isActive;
+  private LocalDateTime completionDateTime;
 }
