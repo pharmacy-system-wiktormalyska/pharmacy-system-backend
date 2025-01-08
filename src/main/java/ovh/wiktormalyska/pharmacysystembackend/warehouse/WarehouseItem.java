@@ -12,7 +12,7 @@ import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 @AllArgsConstructor
 public class WarehouseItem {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne

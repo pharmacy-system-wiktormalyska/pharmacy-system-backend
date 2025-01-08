@@ -2,11 +2,13 @@ package ovh.wiktormalyska.pharmacysystembackend.warehouse;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/warehouse/")
+@RestController
+@RequestMapping("/warehouse/")
 public class WarehouseController {
     private final WarehouseService warehouseService;
 
@@ -15,7 +17,7 @@ public class WarehouseController {
     }
 
     @GetMapping("get/id/{id}")
-    public WarehouseResponseDTO getAllWarehouses(@PathVariable Long id) {
+    public WarehouseResponseDTO getWarehouseById(@PathVariable Long id) {
         return warehouseService.getWarehouseDtoById(id);
     }
 

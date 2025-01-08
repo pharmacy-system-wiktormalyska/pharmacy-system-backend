@@ -1,13 +1,11 @@
 package ovh.wiktormalyska.pharmacysystembackend.order;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 
 @Entity
+@Table(name = "order_items")
 @Setter
 @Getter
 @Builder
@@ -15,7 +13,7 @@ import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 @NoArgsConstructor
 public class OrderItem {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
