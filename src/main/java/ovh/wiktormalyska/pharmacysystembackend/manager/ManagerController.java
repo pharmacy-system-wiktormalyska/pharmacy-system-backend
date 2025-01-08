@@ -2,6 +2,8 @@ package ovh.wiktormalyska.pharmacysystembackend.manager;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/manager/")
 public class ManagerController {
@@ -14,6 +16,11 @@ public class ManagerController {
   @PostMapping("add")
   public ManagerResponseDTO addNewManager(@RequestBody ManagerRequestDTO managerRequestDTO) {
     return managerService.addNewManager(managerRequestDTO);
+  }
+
+  @GetMapping("get/all")
+  public List<ManagerResponseDTO> getAllManagers() {
+    return managerService.getAllManagerDtos();
   }
 
   @GetMapping("get/id/{id}")

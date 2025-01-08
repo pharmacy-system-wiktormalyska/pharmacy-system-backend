@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.manager;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,11 @@ public class ManagerServiceImpl implements ManagerService {
     Manager manager = getManagerById(id);
 
     return ManagerMapper.toDTO(removeManager(manager));
+  }
+
+  @Override
+  public List<ManagerResponseDTO> getAllManagerDtos() {
+    return managerRepository.findAll().stream().map(ManagerMapper::toDTO).toList();
   }
 
   // Utility

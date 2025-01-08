@@ -1,5 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.manager;
 
+import java.util.List;
+
 public interface ManagerService {
   ManagerResponseDTO addNewManager(ManagerRequestDTO managerRequestDTO);
 
@@ -9,4 +11,6 @@ public interface ManagerService {
   ManagerResponseDTO updateManager(ManagerRequestDTO managerRequestDTO);
 
   ManagerResponseDTO removeManagerById(Long id);
+
+  List<ManagerResponseDTO> getAllManagerDtos();
 }
