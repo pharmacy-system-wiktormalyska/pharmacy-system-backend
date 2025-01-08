@@ -1,9 +1,12 @@
 package ovh.wiktormalyska.pharmacysystembackend.order;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacist.Pharmacist;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,8 +16,22 @@ import lombok.*;
 @NoArgsConstructor
 public class Order {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @ManyToOne
+  private Pharmacy pharmacy;
 
+  @ManyToOne
+  private Pharmacist pharmacist;
+
+  @OneToMany
+  private List<OrderItem> itemsInOrder;
+
+  @Builder.Default private OrderStatus orderStatus = OrderStatus.CREATED;
+
+  @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
+  private LocalDateTime modificationDateTime;
+
+  @Builder.Default private boolean isActive = true;
 }

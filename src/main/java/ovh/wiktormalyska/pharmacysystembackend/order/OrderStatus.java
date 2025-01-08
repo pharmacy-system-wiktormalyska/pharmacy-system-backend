@@ -1,3 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.order;
 
-public enum OrderStatus {}
+public enum OrderStatus {
+  CREATED,
+  PAID,
+  RECEIVED
+}
