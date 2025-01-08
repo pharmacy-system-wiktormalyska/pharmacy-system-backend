@@ -1,8 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.warehouse;
 
-import ovh.wiktormalyska.pharmacysystembackend.drugorder.DrugOrder;
-
 import java.util.List;
+import ovh.wiktormalyska.pharmacysystembackend.drugorder.DrugOrder;
 
 public interface WarehouseService {
   DrugOrder completeOrder(DrugOrder drugOrder);

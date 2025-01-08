@@ -15,11 +15,9 @@ public class WarehouseItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  private Warehouse warehouse;
+  @ManyToOne private Warehouse warehouse;
 
-  @ManyToOne
-  private Drug drug;
+  @ManyToOne private Drug drug;
 
   private Long priceInCents;
   private Long quantity;

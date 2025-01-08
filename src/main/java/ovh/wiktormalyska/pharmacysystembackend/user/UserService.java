@@ -16,18 +16,19 @@ public class UserService {
   private final ManagerRepository managerRepository;
   private final AdministratorRepository administratorRepository;
 
-  public UserService(PharmacistRepository pharmacistRepository, ManagerRepository managerRepository, AdministratorRepository administratorRepository) {
+  public UserService(
+      PharmacistRepository pharmacistRepository,
+      ManagerRepository managerRepository,
+      AdministratorRepository administratorRepository) {
     this.pharmacistRepository = pharmacistRepository;
     this.managerRepository = managerRepository;
     this.administratorRepository = administratorRepository;
   }
 
   public CustomUserDetails checkIfUserExists(String username) {
-    Pharmacist pharmacist =
-        pharmacistRepository.findByUsername(username).orElse(null);
+    Pharmacist pharmacist = pharmacistRepository.findByUsername(username).orElse(null);
     Manager manager = managerRepository.findByUsername(username).orElse(null);
-    Administrator administrator =
-        administratorRepository.findByUsername(username).orElse(null);
+    Administrator administrator = administratorRepository.findByUsername(username).orElse(null);
 
     CustomUserDetails userDetails =
         pharmacist == null ? (manager == null ? (administrator) : manager) : pharmacist;

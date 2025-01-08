@@ -7,7 +7,6 @@ import java.util.Collections;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import ovh.wiktormalyska.pharmacysystembackend.security.UserRole;
 import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 

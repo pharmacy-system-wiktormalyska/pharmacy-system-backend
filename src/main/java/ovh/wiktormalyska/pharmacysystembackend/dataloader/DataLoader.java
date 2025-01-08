@@ -43,16 +43,18 @@ public class DataLoader implements ApplicationRunner {
             .pharmaceuticalForm("Tabletki drażowane")
             .strength("200 mg")
             .build();
+
     System.out.println(administrator);
     System.out.println(drug);
+
     administratorRepository
         .findByUsername("admin")
         .ifPresentOrElse(
             a -> System.out.println("Admin already exists"),
             () -> administratorRepository.save(administrator));
-    drugRepository.findByName("Ibuprofen AFL")
+    drugRepository
+        .findByName("Ibuprofen AFL")
         .ifPresentOrElse(
-            d -> System.out.println("Drug already exists"),
-            () -> drugRepository.save(drug));
+            d -> System.out.println("Drug already exists"), () -> drugRepository.save(drug));
   }
 }

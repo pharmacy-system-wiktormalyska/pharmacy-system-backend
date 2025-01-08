@@ -14,7 +14,8 @@ public class AdministratorServiceImpl implements AdministratorService {
   private final AdministratorRepository administratorRepository;
   private final AuthService authService;
 
-  AdministratorServiceImpl(AdministratorRepository administratorRepository, AuthService authService) {
+  AdministratorServiceImpl(
+      AdministratorRepository administratorRepository, AuthService authService) {
     this.administratorRepository = administratorRepository;
     this.authService = authService;
   }

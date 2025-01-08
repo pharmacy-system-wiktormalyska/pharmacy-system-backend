@@ -1,8 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.administrator;
 
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/administrator/")

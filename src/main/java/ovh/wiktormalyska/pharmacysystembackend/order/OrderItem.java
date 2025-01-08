@@ -16,8 +16,7 @@ public class OrderItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  private Drug drug;
+  @ManyToOne private Drug drug;
   private Long quantity;
   private Long priceInCents;
 }

@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class OrderItemDTO {
-    private Long id;
-    private Long drugId;
-    private Long quantity;
-    private Long priceInCents;
+  private Long id;
+  private Long drugId;
+  private Long quantity;
+  private Long priceInCents;
 }

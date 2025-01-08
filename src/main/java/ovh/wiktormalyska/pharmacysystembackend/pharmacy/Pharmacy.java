@@ -1,7 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacy;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import lombok.*;
 import ovh.wiktormalyska.pharmacysystembackend.manager.Manager;
@@ -33,8 +32,7 @@ public class Pharmacy {
   private String email;
   private String website;
 
-  @OneToOne
-  private Manager manager;
+  @OneToOne private Manager manager;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;

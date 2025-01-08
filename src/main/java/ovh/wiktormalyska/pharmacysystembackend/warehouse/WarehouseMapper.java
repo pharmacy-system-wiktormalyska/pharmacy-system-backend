@@ -2,8 +2,8 @@ package ovh.wiktormalyska.pharmacysystembackend.warehouse;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 import ovh.wiktormalyska.pharmacysystembackend.drugorder.DrugOrder;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 
 public class WarehouseMapper {
   @Contract(pure = true)

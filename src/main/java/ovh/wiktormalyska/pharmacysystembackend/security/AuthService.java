@@ -28,8 +28,7 @@ public class AuthService {
 
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
-            authRequestDto.getUsername(),
-            authRequestDto.getPassword()));
+            authRequestDto.getUsername(), authRequestDto.getPassword()));
 
     return userDetails;
   }

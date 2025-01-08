@@ -8,7 +8,6 @@ import java.util.List;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
 import ovh.wiktormalyska.pharmacysystembackend.security.UserRole;
 import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
@@ -42,8 +41,7 @@ public class Manager implements CustomUserDetails {
   private String mothersName;
   private String education;
 
-  @ManyToMany
-  private List<Pharmacy> pharmacies;
+  @ManyToMany private List<Pharmacy> pharmacies;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;

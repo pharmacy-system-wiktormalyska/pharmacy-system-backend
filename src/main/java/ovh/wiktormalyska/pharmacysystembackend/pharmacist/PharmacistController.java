@@ -1,8 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacist;
 
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pharmacist/")
