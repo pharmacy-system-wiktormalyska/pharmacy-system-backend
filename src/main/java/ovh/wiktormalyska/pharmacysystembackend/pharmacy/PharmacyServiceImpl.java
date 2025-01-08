@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacy;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,11 @@ public class PharmacyServiceImpl implements PharmacyService {
     Pharmacy pharmacy = getPharmacy(id);
 
     return PharmacyMapper.toDTO(removePharmacy(pharmacy));
+  }
+
+  @Override
+  public List<PharmacyResponseDTO> getAllPharmacyDtos() {
+    return pharmacyRepository.findAll().stream().map(PharmacyMapper::toDTO).toList();
   }
 
   // Utility

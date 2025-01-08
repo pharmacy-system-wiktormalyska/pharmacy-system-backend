@@ -2,6 +2,8 @@ package ovh.wiktormalyska.pharmacysystembackend.pharmacy;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pharmacy/")
 public class PharmacyController {
@@ -14,6 +16,11 @@ public class PharmacyController {
   @PostMapping("add")
   public PharmacyResponseDTO addNewPharmacy(@RequestBody PharmacyRequestDTO pharmacyRequestDTO) {
     return pharmacyService.addNewPharmacy(pharmacyRequestDTO);
+  }
+
+  @GetMapping("get/all")
+  public List<PharmacyResponseDTO> getPharmacyById() {
+    return pharmacyService.getAllPharmacyDtos();
   }
 
   @GetMapping("get/id/{id}")
