@@ -3,7 +3,6 @@ package ovh.wiktormalyska.pharmacysystembackend.security;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
@@ -24,7 +23,7 @@ public class AuthService {
     this.userService = userService;
   }
 
-  public CustomUserDetails login(@NotNull AuthRequestDto authRequestDto) {
+  public CustomUserDetails login(@NotNull AuthRequestDTO authRequestDto) {
     CustomUserDetails userDetails = userService.checkIfUserExists(authRequestDto.getUsername());
 
     authenticationManager.authenticate(

@@ -6,5 +6,5 @@ import java.util.List;
 
 @Service
 public interface OrderService {
-  List<OrderDto> getAllOrderDtos();
+  List<OrderDTO> getAllOrderDtos();
 }

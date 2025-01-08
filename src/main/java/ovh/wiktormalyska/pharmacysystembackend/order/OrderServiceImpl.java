@@ -13,7 +13,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<OrderDto> getAllOrderDtos() {
+  public List<OrderDTO> getAllOrderDtos() {
     return orderRepository.findAll().stream().map(OrderMapper::toDTO).toList();
   }
 }

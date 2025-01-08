@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class WarehouseResponseDTO {
   private Long id;
-  private List<WarehouseItemDto> stock;
+  private List<WarehouseItemDTO> stock;
   private Long managerId;
   private List<Long> pharmacyIds;
   private List<Long> drugOrderIds;

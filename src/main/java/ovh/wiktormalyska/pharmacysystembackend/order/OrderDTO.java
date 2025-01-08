@@ -10,12 +10,12 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class OrderDto {
+public class OrderDTO {
   private Long id;
   private Long pharmacyId;
   private Long pharmacistId;
   private OrderStatus orderStatus;
-  private List<OrderItemDto> itemsInOrder;
+  private List<OrderItemDTO> itemsInOrder;
   private LocalDateTime creationDateTime;
   private LocalDateTime modificationDateTime;
 }

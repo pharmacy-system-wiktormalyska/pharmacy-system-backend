@@ -3,8 +3,8 @@ package ovh.wiktormalyska.pharmacysystembackend.order;
 import org.jetbrains.annotations.NotNull;
 
 public class OrderMapper {
-  public static OrderDto toDTO(@NotNull Order order) {
-    return OrderDto.builder()
+  public static OrderDTO toDTO(@NotNull Order order) {
+    return OrderDTO.builder()
         .id(order.getId())
         .pharmacyId(order.getPharmacy().getId())
         .pharmacistId(order.getPharmacist().getId())
