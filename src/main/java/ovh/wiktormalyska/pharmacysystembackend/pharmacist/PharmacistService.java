@@ -1,5 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacist;
 
+import java.util.List;
+
 public interface PharmacistService {
   PharmacistResponseDTO addNewPharmacist(PharmacistRequestDTO pharmacistRequestDTO);
 
@@ -10,4 +12,6 @@ public interface PharmacistService {
   PharmacistResponseDTO updatePharmacist(PharmacistRequestDTO pharmacistRequestDTO);
 
   PharmacistResponseDTO removePharmacistById(Long id);
+
+  List<PharmacistResponseDTO> getAllPharmacistDtos();
 }
