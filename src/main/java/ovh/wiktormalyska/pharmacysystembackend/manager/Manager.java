@@ -58,6 +58,11 @@ public class Manager implements CustomUserDetails {
   }
 
   @Override
+  public Long getId() {
+    return id;
+  }
+
+  @Override
   public String getPassword() {
     return password;
   }

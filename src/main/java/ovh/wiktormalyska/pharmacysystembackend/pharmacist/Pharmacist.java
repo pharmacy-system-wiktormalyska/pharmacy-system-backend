@@ -58,6 +58,11 @@ public class Pharmacist implements CustomUserDetails {
   }
 
   @Override
+  public Long getId() {
+    return id;
+  }
+
+  @Override
   public String getPassword() {
     return password;
   }

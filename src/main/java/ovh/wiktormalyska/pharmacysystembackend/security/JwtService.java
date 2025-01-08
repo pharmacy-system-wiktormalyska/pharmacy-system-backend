@@ -38,6 +38,7 @@ public class JwtService {
 
     Map<String, Object> info = new HashMap<>();
     info.put("authorities", authorities);
+    info.put("user_id", userDetails.getId());
     info.put("name", userDetails.getRealName());
 
     return generateToken(info, userDetails);
