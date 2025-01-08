@@ -20,6 +20,8 @@ public class DrugResponseDTO {
   private String atcCode;
   private String strength;
 
+  private String relativeImageUrl;
+
   private LocalDateTime modificationDateTime;
 
   private boolean isActive;

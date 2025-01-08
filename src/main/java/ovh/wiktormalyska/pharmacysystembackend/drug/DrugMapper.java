@@ -16,6 +16,7 @@ public class DrugMapper {
         .atcCode(drug.getAtcCode())
         .strength(drug.getStrength())
         .modificationDateTime(drug.getModificationDateTime())
+        .relativeImageUrl(drug.getRelativeImageUrl())
         .isActive(drug.isActive())
         .build();
   }
@@ -32,6 +33,7 @@ public class DrugMapper {
         .maNumber(drugRequestDTO.getMaNumber())
         .atcCode(drugRequestDTO.getAtcCode())
         .strength(drugRequestDTO.getStrength())
+        .relativeImageUrl(drugRequestDTO.getRelativeImageUrl())
         .build();
   }
 }

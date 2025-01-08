@@ -18,4 +18,6 @@ public class DrugRequestDTO {
   private String maNumber;
   private String atcCode;
   private String strength;
+
+  private String relativeImageUrl;
 }
