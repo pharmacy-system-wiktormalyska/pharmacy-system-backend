@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ovh.wiktormalyska.pharmacysystembackend.drugorder.DrugOrder;
-import ovh.wiktormalyska.pharmacysystembackend.drugorder.OrderStatus;
+import ovh.wiktormalyska.pharmacysystembackend.drugorder.DrugOrderStatus;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -40,7 +40,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     drugOrder.setModificationDateTime(LocalDateTime.now());
     drugOrder.setCompletionDateTime(LocalDateTime.now());
-    drugOrder.setOrderStatus(OrderStatus.COMPLETED);
+    drugOrder.setDrugOrderStatus(DrugOrderStatus.COMPLETED);
 
     return drugOrder;
   }
@@ -56,6 +56,7 @@ public class WarehouseServiceImpl implements WarehouseService {
   }
 
   // Utility
+  @Override
   public Warehouse getWarehouseById(Long id) {
     Optional<Warehouse> warehouse = warehouseRepository.findById(id);
 

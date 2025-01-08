@@ -10,4 +10,6 @@ public interface WarehouseService {
   List<WarehouseResponseDTO> getAllWarehouseDtos();
 
   WarehouseResponseDTO getWarehouseDtoById(Long id);
+
+  Warehouse getWarehouseById(Long warehouseId);
 }
