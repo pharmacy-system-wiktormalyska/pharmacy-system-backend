@@ -10,9 +10,6 @@ import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 import ovh.wiktormalyska.pharmacysystembackend.drug.DrugRepository;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Timer;
-
 @Component
 public class DataLoader implements ApplicationRunner {
 
