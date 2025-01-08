@@ -45,8 +45,6 @@ public class SecurityConfig {
                     .hasAnyAuthority("MANAGER", "ADMINISTRATOR")
                     .requestMatchers("administrator/**")
                     .hasAnyAuthority("ADMINISTRATOR")
-//                    .requestMatchers("administrator/**")
-//                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))

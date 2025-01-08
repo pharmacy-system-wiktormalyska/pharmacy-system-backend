@@ -10,7 +10,7 @@ import ovh.wiktormalyska.pharmacysystembackend.administrator.AdministratorReposi
 @Component
 public class DataLoader implements ApplicationRunner {
 
-    private AdministratorRepository administratorRepository;
+    private final AdministratorRepository administratorRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public DataLoader(AdministratorRepository administratorRepository) {

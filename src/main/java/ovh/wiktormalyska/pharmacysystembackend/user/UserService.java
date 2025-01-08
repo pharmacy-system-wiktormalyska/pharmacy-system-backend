@@ -1,7 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.user;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ovh.wiktormalyska.pharmacysystembackend.administrator.Administrator;
