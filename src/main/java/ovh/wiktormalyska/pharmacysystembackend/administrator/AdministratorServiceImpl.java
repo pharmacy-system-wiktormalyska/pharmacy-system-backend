@@ -1,6 +1,7 @@
 package ovh.wiktormalyska.pharmacysystembackend.administrator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     Administrator administrator = getAdministratorById(id);
 
     return AdministratorMapper.toDTO(removeAdministrator(administrator));
+  }
+
+  @Override
+  public List<AdministratorResponseDTO> getAllAdministratorDtos() {
+    return administratorRepository.findAll().stream().map(AdministratorMapper::toDTO).toList();
   }
 
   // Utility
