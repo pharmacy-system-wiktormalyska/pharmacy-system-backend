@@ -9,6 +9,7 @@ import ovh.wiktormalyska.pharmacysystembackend.administrator.AdministratorReposi
 import ovh.wiktormalyska.pharmacysystembackend.drug.Drug;
 import ovh.wiktormalyska.pharmacysystembackend.drug.DrugRepository;
 
+import java.time.LocalDateTime;
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -34,6 +35,7 @@ public class DataLoader implements ApplicationRunner {
             .build();
     Drug drug =
         Drug.builder()
+            .relativeImageUrl("ibuprofen.png")
             .activeSubstance("Ibuprofen")
             .atcCode("M01AE01")
             .commonName("Ibuprofen AFL")
@@ -42,6 +44,7 @@ public class DataLoader implements ApplicationRunner {
             .name("Ibuprofen AFL")
             .pharmaceuticalForm("Tabletki drażowane")
             .strength("200 mg")
+            .modificationDateTime(LocalDateTime.now())
             .build();
 
     System.out.println(administrator);
