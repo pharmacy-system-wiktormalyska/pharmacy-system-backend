@@ -57,7 +57,7 @@ public class PharmacyServiceImplTest {
   }
 
   @Test
-  public void testGetPharmacyById_Success() {
+  public void testGetPharmacyByIdDtoById_Success() {
     Long id = 1L;
     Pharmacy pharmacy =
         Pharmacy.builder().id(id).name("Test Pharmacy").address("Test Address").build();
@@ -66,7 +66,7 @@ public class PharmacyServiceImplTest {
         PharmacyResponseDTO.builder().id(id).name("Test Pharmacy").address("Test Address").build();
 
     when(pharmacyRepository.findById(id)).thenReturn(Optional.of(pharmacy));
-    PharmacyResponseDTO result = pharmacyServiceImpl.getPharmacyById(id);
+    PharmacyResponseDTO result = pharmacyServiceImpl.getPharmacyDtoById(id);
 
     assertNotNull(result);
     assertEquals(responseDTO.getId(), result.getId());
@@ -75,13 +75,13 @@ public class PharmacyServiceImplTest {
   }
 
   @Test
-  public void testGetPharmacyById_NotFound() {
+  public void testGetPharmacyByIdDtoById_NotFound() {
     Long id = 1L;
 
     when(pharmacyRepository.findById(id)).thenReturn(Optional.empty());
 
     ResponseStatusException exception =
-        assertThrows(ResponseStatusException.class, () -> pharmacyServiceImpl.getPharmacyById(id));
+        assertThrows(ResponseStatusException.class, () -> pharmacyServiceImpl.getPharmacyDtoById(id));
     assertEquals(
         "404 NOT_FOUND \"Pharmacy with this name doesn't exist.\"", exception.getMessage());
   }

@@ -26,7 +26,7 @@ public class PharmacistServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.openMocks(this);
-    when(pharmacyServiceImpl.getPharmacy(1L)).thenReturn(Pharmacy.builder().id(1L).build());
+    when(pharmacyServiceImpl.getPharmacyById(1L)).thenReturn(Pharmacy.builder().id(1L).build());
   }
 
   @Test
@@ -45,7 +45,7 @@ public class PharmacistServiceImplTest {
   }
 
   @Test
-  void testGetPharmacistByIDDtoById() {
+  void testGetPharmacistByIdByIDDtoById() {
     Pharmacy pharmacy = Pharmacy.builder().id(1L).build();
     Pharmacist pharmacist =
         Pharmacist.builder()
@@ -65,7 +65,7 @@ public class PharmacistServiceImplTest {
   }
 
   @Test
-  void testGetPharmacistByIDDtoById_NotFound() {
+  void testGetPharmacistByIdByIDDtoById_NotFound() {
     Pharmacist pharmacist =
         Pharmacist.builder().id(1L).name("John").surname("Doe").isActive(true).build();
 
@@ -105,7 +105,7 @@ public class PharmacistServiceImplTest {
     when(pharmacistRepository.findById(updatedPharmacistRequestDTO.getId()))
         .thenReturn(Optional.of(pharmacist));
     when(pharmacistRepository.save(any(Pharmacist.class))).thenReturn(updatedPharmacist);
-    when(pharmacyServiceImpl.getPharmacy(1L)).thenReturn(pharmacy);
+    when(pharmacyServiceImpl.getPharmacyById(1L)).thenReturn(pharmacy);
 
     PharmacistResponseDTO response =
         pharmacistService.updatePharmacist(updatedPharmacistRequestDTO);

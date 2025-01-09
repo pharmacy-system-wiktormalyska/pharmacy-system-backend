@@ -23,13 +23,13 @@ public class PharmacyServiceImpl implements PharmacyService {
   }
 
   @Override
-  public PharmacyResponseDTO getPharmacyById(Long id) {
-    return PharmacyMapper.toDTO(getPharmacy(id));
+  public PharmacyResponseDTO getPharmacyDtoById(Long id) {
+    return PharmacyMapper.toDTO(getPharmacyById(id));
   }
 
   @Override
   public PharmacyResponseDTO updatePharmacy(@NotNull PharmacyRequestDTO pharmacyRequestDTO) {
-    Pharmacy pharmacy = getPharmacy(pharmacyRequestDTO.getId());
+    Pharmacy pharmacy = getPharmacyById(pharmacyRequestDTO.getId());
 
     pharmacy.setName(pharmacyRequestDTO.getName());
     pharmacy.setAddress(pharmacyRequestDTO.getAddress());
@@ -47,7 +47,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
   @Override
   public PharmacyResponseDTO removePharmacyById(Long id) {
-    Pharmacy pharmacy = getPharmacy(id);
+    Pharmacy pharmacy = getPharmacyById(id);
 
     return PharmacyMapper.toDTO(removePharmacy(pharmacy));
   }
@@ -58,7 +58,7 @@ public class PharmacyServiceImpl implements PharmacyService {
   }
 
   // Utility
-  public @NotNull Pharmacy getPharmacy(Long id) {
+  public @NotNull Pharmacy getPharmacyById(Long id) {
     Optional<Pharmacy> PharmacyOptional = pharmacyRepository.findById(id);
 
     if (PharmacyOptional.isEmpty()) {

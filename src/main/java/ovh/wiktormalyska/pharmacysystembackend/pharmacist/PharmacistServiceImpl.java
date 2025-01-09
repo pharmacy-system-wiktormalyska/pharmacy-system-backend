@@ -21,21 +21,16 @@ public class PharmacistServiceImpl implements PharmacistService {
   }
 
   @Override
-  public PharmacistResponseDTO addNewPharmacist(PharmacistRequestDTO pharmacistRequestDTO) {
+  public PharmacistResponseDTO addNewPharmacist(@NotNull PharmacistRequestDTO pharmacistRequestDTO) {
     Pharmacist pharmacist = PharmacistMapper.fromDTO(pharmacistRequestDTO);
-    pharmacist.setPharmacy(pharmacyServiceImpl.getPharmacy(pharmacistRequestDTO.getPharmacyId()));
+    pharmacist.setPharmacy(pharmacyServiceImpl.getPharmacyById(pharmacistRequestDTO.getPharmacyId()));
 
     return PharmacistMapper.toDTO(pharmacist);
   }
 
   @Override
-  public PharmacistResponseDTO getPharmacistDtoById(Long id) {
-    return PharmacistMapper.toDTO(getPharmacist(id));
-  }
-
-  @Override
-  public Pharmacist getPharmacistById(Long id) {
-    return getPharmacist(id);
+  public PharmacistResponseDTO getPharmacistDtoById(@NotNull Long id) {
+    return PharmacistMapper.toDTO(getPharmacistById(id));
   }
 
   @Override
@@ -55,7 +50,7 @@ public class PharmacistServiceImpl implements PharmacistService {
     pharmacist.setMothersName(pharmacistRequestDTO.getMothersName());
     pharmacist.setEducation(pharmacistRequestDTO.getEducation());
 
-    pharmacist.setPharmacy(pharmacyServiceImpl.getPharmacy(pharmacistRequestDTO.getPharmacyId()));
+    pharmacist.setPharmacy(pharmacyServiceImpl.getPharmacyById(pharmacistRequestDTO.getPharmacyId()));
 
     pharmacist.setModificationDateTime(LocalDateTime.now());
 
@@ -63,7 +58,7 @@ public class PharmacistServiceImpl implements PharmacistService {
   }
 
   @Override
-  public PharmacistResponseDTO removePharmacistById(Long id) {
+  public PharmacistResponseDTO removePharmacistById(@NotNull Long id) {
     Pharmacist pharmacist = getPharmacistById(id);
 
     return PharmacistMapper.toDTO(removePharmacist(pharmacist));
@@ -75,7 +70,7 @@ public class PharmacistServiceImpl implements PharmacistService {
   }
 
   // Utility
-  private @NotNull Pharmacist getPharmacist(Long id) {
+  public @NotNull Pharmacist getPharmacistById(@NotNull Long id) {
     Optional<Pharmacist> pharmacistOptional = pharmacistRepository.findById(id);
 
     if (pharmacistOptional.isEmpty()) {

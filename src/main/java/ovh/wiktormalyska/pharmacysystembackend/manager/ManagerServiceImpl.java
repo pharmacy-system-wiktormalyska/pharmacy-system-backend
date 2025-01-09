@@ -7,35 +7,30 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ovh.wiktormalyska.pharmacysystembackend.pharmacy.PharmacyServiceImpl;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.Pharmacy;
+import ovh.wiktormalyska.pharmacysystembackend.pharmacy.PharmacyService;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
   private final ManagerRepository managerRepository;
-  private final PharmacyServiceImpl pharmacyServiceImpl;
+  private final PharmacyService pharmacyService;
 
-  ManagerServiceImpl(ManagerRepository managerRepository, PharmacyServiceImpl pharmacyServiceImpl) {
+  ManagerServiceImpl(ManagerRepository managerRepository, PharmacyService pharmacyService) {
     this.managerRepository = managerRepository;
-    this.pharmacyServiceImpl = pharmacyServiceImpl;
+    this.pharmacyService = pharmacyService;
   }
 
   @Override
-  public ManagerResponseDTO addNewManager(ManagerRequestDTO managerRequestDTO) {
-    Manager manager = ManagerMapper.fromDTO(managerRequestDTO);
-    manager.setPharmacies(
-        managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
+  public ManagerResponseDTO addNewManager(@NotNull ManagerRequestDTO managerRequestDTO) {
+    Pharmacy pharmacy = pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId());
+    Manager manager = ManagerMapper.fromDTO(managerRequestDTO, pharmacy);
 
-    return ManagerMapper.toDTO(manager);
+    return ManagerMapper.toDTO(managerRepository.save(manager));
   }
 
   @Override
   public ManagerResponseDTO getManagerDtoById(Long id) {
-    return ManagerMapper.toDTO(getManager(id));
-  }
-
-  @Override
-  public Manager getManagerById(Long id) {
-    return getManager(id);
+    return ManagerMapper.toDTO(getManagerById(id));
   }
 
   @Override
@@ -54,8 +49,7 @@ public class ManagerServiceImpl implements ManagerService {
     manager.setMothersName(managerRequestDTO.getMothersName());
     manager.setEducation(managerRequestDTO.getEducation());
 
-    manager.setPharmacies(
-        managerRequestDTO.getPharmacyIds().stream().map(pharmacyServiceImpl::getPharmacy).toList());
+    manager.setPharmacy(pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId()));
 
     manager.setModificationDateTime(LocalDateTime.now());
 
@@ -63,7 +57,7 @@ public class ManagerServiceImpl implements ManagerService {
   }
 
   @Override
-  public ManagerResponseDTO removeManagerById(Long id) {
+  public ManagerResponseDTO removeManagerById(@NotNull Long id) {
     Manager manager = getManagerById(id);
 
     return ManagerMapper.toDTO(removeManager(manager));
@@ -75,7 +69,7 @@ public class ManagerServiceImpl implements ManagerService {
   }
 
   // Utility
-  private @NotNull Manager getManager(Long id) {
+  public @NotNull Manager getManagerById(@NotNull Long id) {
     Optional<Manager> managerOptional = managerRepository.findById(id);
 
     if (managerOptional.isEmpty()) {

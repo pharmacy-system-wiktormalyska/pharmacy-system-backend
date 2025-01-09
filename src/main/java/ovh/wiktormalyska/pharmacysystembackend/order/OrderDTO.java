@@ -13,8 +13,8 @@ public class OrderDTO {
   private Long id;
   private Long pharmacyId;
   private Long pharmacistId;
-  private OrderStatus orderStatus;
   private List<OrderItemDTO> itemsInOrder;
+  private OrderStatus orderStatus;
   private LocalDateTime creationDateTime;
   private LocalDateTime modificationDateTime;
 }
