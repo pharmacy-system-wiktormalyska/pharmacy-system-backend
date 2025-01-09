@@ -41,7 +41,7 @@ public class Manager implements CustomUserDetails {
   private String mothersName;
   private String education;
 
-  @ManyToMany private List<Pharmacy> pharmacies;
+  @OneToOne private Pharmacy pharmacy;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();
   private LocalDateTime modificationDateTime;

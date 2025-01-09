@@ -24,5 +24,5 @@ public class ManagerRequestDTO {
   private String mothersName;
   private String education;
 
-  private List<Long> pharmacyIds;
+  private Long pharmacyId;
 }
