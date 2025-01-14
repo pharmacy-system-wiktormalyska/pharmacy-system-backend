@@ -24,6 +24,8 @@ public class ManagerResponseDTO {
   private String mothersName;
   private String education;
 
+  private Long pharmacyId;
+
   private LocalDateTime creationDateTime;
   private LocalDateTime modificationDateTime;
 }

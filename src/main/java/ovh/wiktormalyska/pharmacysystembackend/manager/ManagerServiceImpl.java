@@ -22,7 +22,8 @@ public class ManagerServiceImpl implements ManagerService {
 
   @Override
   public ManagerResponseDTO addNewManager(@NotNull ManagerRequestDTO managerRequestDTO) {
-    Manager manager = ManagerMapper.fromDTO(managerRequestDTO);
+    Pharmacy pharmacy = pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId());
+    Manager manager = ManagerMapper.fromDTO(managerRequestDTO, pharmacy);
 
     return ManagerMapper.toDTO(managerRepository.save(manager));
   }
@@ -47,6 +48,8 @@ public class ManagerServiceImpl implements ManagerService {
     manager.setFathersName(managerRequestDTO.getFathersName());
     manager.setMothersName(managerRequestDTO.getMothersName());
     manager.setEducation(managerRequestDTO.getEducation());
+
+    manager.setPharmacy(pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId()));
 
     manager.setModificationDateTime(LocalDateTime.now());
 
