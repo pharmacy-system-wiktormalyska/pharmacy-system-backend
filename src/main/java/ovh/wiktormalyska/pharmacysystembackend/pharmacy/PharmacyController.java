@@ -27,6 +27,11 @@ public class PharmacyController {
     return pharmacyService.getPharmacyDtoById(id);
   }
 
+  @GetMapping("get/manager/{managerId}")
+  public PharmacyResponseDTO getPharmacyByManagerId(@PathVariable Long managerId) {
+    return pharmacyService.getPharmacyDtoByManagerId(managerId);
+  }
+
   @PutMapping("update")
   public PharmacyResponseDTO updatePharmacy(@RequestBody PharmacyRequestDTO pharmacyRequestDTO) {
     return pharmacyService.updatePharmacy(pharmacyRequestDTO);

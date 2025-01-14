@@ -14,4 +14,6 @@ public interface PharmacyService {
   List<PharmacyResponseDTO> getAllPharmacyDtos();
 
   Pharmacy getPharmacyById(Long pharmacyId);
+
+  PharmacyResponseDTO getPharmacyDtoByManagerId(Long managerId);
 }

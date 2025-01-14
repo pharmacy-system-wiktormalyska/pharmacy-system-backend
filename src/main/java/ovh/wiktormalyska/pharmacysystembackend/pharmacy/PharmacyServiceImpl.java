@@ -53,6 +53,17 @@ public class PharmacyServiceImpl implements PharmacyService {
   }
 
   @Override
+  public PharmacyResponseDTO getPharmacyDtoByManagerId(Long managerId) {
+    Optional<Pharmacy> pharmacy = pharmacyRepository.findByManagerId(managerId);
+
+    if (pharmacy.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No pharmacy found for manager with this id.");
+    }
+
+    return PharmacyMapper.toDTO(pharmacy.get());
+  }
+
+  @Override
   public List<PharmacyResponseDTO> getAllPharmacyDtos() {
     return pharmacyRepository.findAll().stream().map(PharmacyMapper::toDTO).toList();
   }
