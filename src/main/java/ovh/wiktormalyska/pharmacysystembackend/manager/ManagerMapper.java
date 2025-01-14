@@ -18,12 +18,11 @@ public class ManagerMapper {
         .fathersName(manager.getFathersName())
         .mothersName(manager.getMothersName())
         .education(manager.getEducation())
-        .pharmacyId(manager.getPharmacy().getId())
         .modificationDateTime(manager.getModificationDateTime())
         .build();
   }
 
-  public static @NotNull Manager fromDTO(@NotNull ManagerRequestDTO managerRequestDTO, @NotNull Pharmacy pharmacy) {
+  public static @NotNull Manager fromDTO(@NotNull ManagerRequestDTO managerRequestDTO) {
     return Manager.builder()
         .id(managerRequestDTO.getId())
         .name(managerRequestDTO.getName())
@@ -37,7 +36,6 @@ public class ManagerMapper {
         .fathersName(managerRequestDTO.getFathersName())
         .mothersName(managerRequestDTO.getMothersName())
         .education(managerRequestDTO.getEducation())
-        .pharmacy(pharmacy)
         .build();
   }
 }
