@@ -21,6 +21,7 @@ public class ManagerMapper {
         .mothersName(manager.getMothersName())
         .education(manager.getEducation())
         .pharmacyId(manager.getPharmacy() == null ? null : manager.getPharmacy().getId())
+        .creationDateTime(manager.getCreationDateTime())
         .modificationDateTime(manager.getModificationDateTime())
         .build();
   }

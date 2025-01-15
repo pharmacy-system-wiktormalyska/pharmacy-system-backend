@@ -20,6 +20,7 @@ public class PharmacistMapper {
         .mothersName(pharmacist.getMothersName())
         .education(pharmacist.getEducation())
         .pharmacyId(pharmacist.getPharmacy() == null ? null : pharmacist.getPharmacy().getId())
+        .creationDateTime(pharmacist.getCreationDateTime())
         .modificationDateTime(pharmacist.getModificationDateTime())
         .isActive(pharmacist.isActive())
         .build();

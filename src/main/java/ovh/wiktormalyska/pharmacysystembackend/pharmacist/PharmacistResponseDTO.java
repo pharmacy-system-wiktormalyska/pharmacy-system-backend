@@ -28,6 +28,7 @@ public class PharmacistResponseDTO {
 
   private Long pharmacyId;
 
+  private LocalDateTime creationDateTime;
   private LocalDateTime modificationDateTime;
 
   private boolean isActive;
