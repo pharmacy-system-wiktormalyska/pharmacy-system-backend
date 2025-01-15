@@ -22,10 +22,20 @@ public class ManagerServiceImpl implements ManagerService {
 
   @Override
   public ManagerResponseDTO addNewManager(@NotNull ManagerRequestDTO managerRequestDTO) {
-    Pharmacy pharmacy = pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId());
-    Manager manager = ManagerMapper.fromDTO(managerRequestDTO, pharmacy);
+    Pharmacy pharmacy = null;
 
-    return ManagerMapper.toDTO(managerRepository.save(manager));
+    if (managerRequestDTO.getPharmacyId() != null) {
+      pharmacy = pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId());
+    }
+
+    Optional<Manager> manager = managerRepository.findByUsername(managerRequestDTO.getUsername());
+
+    if (manager.isPresent()) {
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Manager with this username already exists.");
+    }
+
+    return ManagerMapper.toDTO(managerRepository.save(ManagerMapper.fromDTO(managerRequestDTO, pharmacy)));
   }
 
   @Override

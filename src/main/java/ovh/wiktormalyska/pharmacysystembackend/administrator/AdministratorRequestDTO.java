@@ -1,5 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.administrator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,9 +15,10 @@ public class AdministratorRequestDTO {
   private String name;
   private String username;
   private String surname;
+  private String pesel;
   private String familyName;
   private String placeOfBirth;
-  private LocalDateTime dateOfBirth;
+  private LocalDate dateOfBirth;
   private String nationality;
   private String address;
   private String correspondenceAddress;

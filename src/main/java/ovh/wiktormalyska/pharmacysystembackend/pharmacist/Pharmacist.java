@@ -1,6 +1,8 @@
 package ovh.wiktormalyska.pharmacysystembackend.pharmacist;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +34,7 @@ public class Pharmacist implements CustomUserDetails {
   private String pesel;
   private String familyName;
   private String placeOfBirth;
-  private LocalDateTime dateOfBirth;
+  private LocalDate dateOfBirth;
   private String nationality;
   private String address;
   private String correspondenceAddress;
@@ -41,7 +43,6 @@ public class Pharmacist implements CustomUserDetails {
   private String education;
 
   @ManyToOne
-  @JoinColumn(name = "pharmacy_id")
   private Pharmacy pharmacy;
 
   @Builder.Default private LocalDateTime creationDateTime = LocalDateTime.now();

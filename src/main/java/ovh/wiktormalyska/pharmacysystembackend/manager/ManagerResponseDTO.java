@@ -1,5 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.manager;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -13,10 +14,12 @@ public class ManagerResponseDTO {
   private Long id;
 
   private String name;
+  private String username;
   private String surname;
+  private String pesel;
   private String familyName;
   private String placeOfBirth;
-  private LocalDateTime dateOfBirth;
+  private LocalDate dateOfBirth;
   private String nationality;
   private String address;
   private String correspondenceAddress;
