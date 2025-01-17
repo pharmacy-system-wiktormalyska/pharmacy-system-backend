@@ -77,7 +77,7 @@ public class DrugOrderServiceImpl implements DrugOrderService {
 
   @Override
   public List<DrugOrderResponseDTO> getAllDrugOrders() {
-    return drugOrderRepository.findAll().stream().map(DrugOrderMapper::toDTO).toList();
+    return drugOrderRepository.findAll().stream().filter(DrugOrder::isActive).map(DrugOrderMapper::toDTO).toList();
   }
 
   @Override

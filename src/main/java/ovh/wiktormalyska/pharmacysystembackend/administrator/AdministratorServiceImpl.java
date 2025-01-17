@@ -22,7 +22,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   @Override
   public AdministratorResponseDTO addNewAdministrator(
-      AdministratorRequestDTO administratorRequestDTO) {
+      @NotNull AdministratorRequestDTO administratorRequestDTO) {
     Administrator administrator = AdministratorMapper.fromDTO(administratorRequestDTO);
     administrator.setPassword(authService.encodePassword(administrator.getPassword()));
 
@@ -30,7 +30,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public AdministratorResponseDTO getAdministratorDtoById(Long id) {
+  public AdministratorResponseDTO getAdministratorDtoById(@NotNull Long id) {
     return AdministratorMapper.toDTO(getAdministratorById(id));
   }
 
@@ -57,7 +57,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public AdministratorResponseDTO removeAdministratorById(Long id) {
+  public AdministratorResponseDTO removeAdministratorById(@NotNull Long id) {
     Administrator administrator = getAdministratorById(id);
 
     return AdministratorMapper.toDTO(removeAdministrator(administrator));
@@ -65,11 +65,14 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   @Override
   public List<AdministratorResponseDTO> getAllAdministratorDtos() {
-    return administratorRepository.findAll().stream().map(AdministratorMapper::toDTO).toList();
+    return administratorRepository.findAll().stream()
+        .filter(Administrator::isActive)
+        .map(AdministratorMapper::toDTO)
+        .toList();
   }
 
   // Utility
-  private @NotNull Administrator getAdministratorById(Long id) {
+  private @NotNull Administrator getAdministratorById(@NotNull Long id) {
     Optional<Administrator> administratorOptional = administratorRepository.findById(id);
 
     if (administratorOptional.isEmpty()) {

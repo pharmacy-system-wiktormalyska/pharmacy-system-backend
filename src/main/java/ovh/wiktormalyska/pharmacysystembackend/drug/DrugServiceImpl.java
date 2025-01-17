@@ -70,8 +70,7 @@ public class DrugServiceImpl implements DrugService {
 
   @Override
   public List<DrugResponseDTO> getAllDrugs() {
-    System.out.println("getAllDrugs");
-    return drugRepository.findAll().stream().map(DrugMapper::toDTO).toList();
+    return drugRepository.findAll().stream().filter(Drug::isActive).map(DrugMapper::toDTO).toList();
   }
 
   // Utility
