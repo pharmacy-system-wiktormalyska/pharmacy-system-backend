@@ -47,7 +47,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
   @Override
   public List<WarehouseResponseDTO> getAllWarehouseDtos() {
-    return warehouseRepository.findAll().stream().map(WarehouseMapper::toDTO).toList();
+    return warehouseRepository.findAll().stream().filter(Warehouse::isActive).map(WarehouseMapper::toDTO).toList();
   }
 
   @Override

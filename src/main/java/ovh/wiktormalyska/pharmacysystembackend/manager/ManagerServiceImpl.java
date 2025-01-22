@@ -35,7 +35,8 @@ public class ManagerServiceImpl implements ManagerService {
           HttpStatus.CONFLICT, "Manager with this username already exists.");
     }
 
-    return ManagerMapper.toDTO(managerRepository.save(ManagerMapper.fromDTO(managerRequestDTO, pharmacy)));
+    return ManagerMapper.toDTO(
+        managerRepository.save(ManagerMapper.fromDTO(managerRequestDTO, pharmacy)));
   }
 
   @Override
@@ -59,7 +60,10 @@ public class ManagerServiceImpl implements ManagerService {
     manager.setMothersName(managerRequestDTO.getMothersName());
     manager.setEducation(managerRequestDTO.getEducation());
 
-    manager.setPharmacy(pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId()));
+    manager.setPharmacy(
+        managerRequestDTO.getPharmacyId() == null
+            ? null
+            : pharmacyService.getPharmacyById(managerRequestDTO.getPharmacyId()));
 
     manager.setModificationDateTime(LocalDateTime.now());
 
@@ -75,7 +79,7 @@ public class ManagerServiceImpl implements ManagerService {
 
   @Override
   public List<ManagerResponseDTO> getAllManagerDtos() {
-    return managerRepository.findAll().stream().map(ManagerMapper::toDTO).toList();
+    return managerRepository.findAll().stream().filter(Manager::isActive).map(ManagerMapper::toDTO).toList();
   }
 
   // Utility

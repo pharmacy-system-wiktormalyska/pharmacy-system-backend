@@ -66,7 +66,7 @@ public class PharmacistServiceImpl implements PharmacistService {
 
   @Override
   public List<PharmacistResponseDTO> getAllPharmacistDtos() {
-    return pharmacistRepository.findAll().stream().map(PharmacistMapper::toDTO).toList();
+    return pharmacistRepository.findAll().stream().filter(Pharmacist::isActive).map(PharmacistMapper::toDTO).toList();
   }
 
   // Utility

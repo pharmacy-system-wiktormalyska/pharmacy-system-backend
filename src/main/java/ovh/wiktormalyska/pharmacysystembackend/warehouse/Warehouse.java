@@ -28,4 +28,6 @@ public class Warehouse {
   @ManyToMany private List<Pharmacy> pharmacies;
 
   @OneToMany private List<DrugOrder> drugOrders;
+
+  @Builder.Default private boolean isActive = true;
 }

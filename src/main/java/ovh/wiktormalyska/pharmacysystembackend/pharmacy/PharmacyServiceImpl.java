@@ -65,7 +65,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
   @Override
   public List<PharmacyResponseDTO> getAllPharmacyDtos() {
-    return pharmacyRepository.findAll().stream().map(PharmacyMapper::toDTO).toList();
+    return pharmacyRepository.findAll().stream().filter(Pharmacy::isActive).map(PharmacyMapper::toDTO).toList();
   }
 
   // Utility
