@@ -9,6 +9,7 @@ public class WarehouseItemMapper {
         .id(warehouseItem.getId())
         .drugId(warehouseItem.getDrug().getId())
         .quantity(warehouseItem.getQuantity())
+        .priceInCents(warehouseItem.getPriceInCents())
         .build();
   }
 
