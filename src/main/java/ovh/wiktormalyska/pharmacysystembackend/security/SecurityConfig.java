@@ -63,6 +63,7 @@ public class SecurityConfig {
     configuration.setAllowedOrigins(
         List.of(
             "http://localhost:3000",
+            "http://localhost:3001",
             "https://frontend.pharmacy.wiktormalyska.ovh",
             "https://pharmacy.wiktormalyska.ovh"));
     configuration.setAllowedMethods(List.of("*"));
