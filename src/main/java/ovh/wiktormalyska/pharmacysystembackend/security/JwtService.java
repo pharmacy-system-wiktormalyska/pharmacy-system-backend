@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
 @Service
 public class JwtService {
+
+  @Value("${jwt.secret}")
+  private String secretKey;
+
   private final long jwtExpiration = 43200000; // 12 hours; in millis
 
   public String extractUsername(String token) {
@@ -83,7 +88,6 @@ public class JwtService {
   }
 
   private @NotNull Key getSignInKey() {
-    String secretKey = "b69fd3191bfef057ea309c8945a46a78a53acf7aab7cedd938dddae6e98a424d";
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }
