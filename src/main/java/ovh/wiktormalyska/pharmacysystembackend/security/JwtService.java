@@ -86,7 +86,10 @@ public class JwtService {
 
   private @NotNull Key getSignInKey() {
     Dotenv dotenv = Dotenv.configure().load();
-    String secretKey = dotenv.get("JWT_SECRET");
+    String secretKey = dotenv.get("JWT_SECRET_KEY");
+    if (secretKey == null || secretKey.isEmpty()) {
+        throw new IllegalArgumentException("JWT secret key is missing");
+    }
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }
