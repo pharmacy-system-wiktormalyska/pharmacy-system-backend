@@ -1,5 +1,6 @@
 package ovh.wiktormalyska.pharmacysystembackend.security;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -12,7 +13,6 @@ import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,6 @@ import ovh.wiktormalyska.pharmacysystembackend.user.CustomUserDetails;
 
 @Service
 public class JwtService {
-
-  @Value("${jwt.secret}")
-  private String secretKey;
 
   private final long jwtExpiration = 43200000; // 12 hours; in millis
 
@@ -88,6 +85,8 @@ public class JwtService {
   }
 
   private @NotNull Key getSignInKey() {
+    Dotenv dotenv = Dotenv.configure().load();
+    String secretKey = dotenv.get("JWT_SECRET");
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }
